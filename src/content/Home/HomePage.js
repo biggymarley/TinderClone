@@ -21,7 +21,8 @@ const classes = {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "50%",
     boxShadow:'0 2px 6px 0 rgb(124 133 145 / 77%)',
-    marginBottom:"10px"
+    // marginBottom:"3rem",
+    backgroundAttachment:"fixed"
   },
   FrontBgColor: {
     backgroundColor: "rgba(0,0,0,.4)",

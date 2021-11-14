@@ -7,13 +7,8 @@ import React from "react";
 export default function InnerHome() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-
-  
-
-
   return matches ? <WebRender /> : <MobileRender />;
 }
-
 
 const WebRender = () => {
   return (
@@ -65,6 +60,7 @@ const classes = {
     color: "#FFFFFF",
     fontFamily: "'Roboto', sans-serif",
     letterSpacing: "2px",
+    fontWeight: "900",
   },
 
   signUp: {
@@ -83,7 +79,7 @@ const classes = {
     minHeight: "55px",
     borderRadius: "12em",
     textTransform: "capitalize",
-    fontWeight: "500",
+    fontWeight: "600",
   },
   MobileLogin: {
     background: "transparent",
@@ -92,6 +88,7 @@ const classes = {
     borderRadius: "12em",
     outline: "#FFFFFF 2px solid",
     textTransform: "capitalize",
+    fontWeight: "600",
   },
   MobileheadTitle: {
     color: "#FFFFFF",
