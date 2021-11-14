@@ -1,9 +1,17 @@
 import React from "react";
-import { Container, Grid, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Container,
+  Grid,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TwitterIcon from "@mui/icons-material/Twitter";
+
 export default function Footer() {
   return (
     <footer style={classes.Footer}>
@@ -21,8 +29,10 @@ export default function Footer() {
               >
                 {content?.items?.map((item, index) =>
                   content.isIcon ? (
-                    <a href="#" key={index}>
+                    <a href="/" key={index}>
+                      {/* // <IconButton> */}
                       {item.label}
+                      {/* // </IconButton> */}
                     </a>
                   ) : (
                     <Typography key={index} sx={classes.links}>
@@ -43,9 +53,6 @@ const classes = {
   Footer: {
     padding: "3rem 0",
     background: "linear-gradient(225deg,#ff6036,#fd267a)",
-    position:"sticky",
-    bottom:0,
-    zIndex:-1,
   },
   headTitle: {
     fontSize: "1.2rem",

@@ -5,12 +5,14 @@ import Footer from "./content/Footer/Footer";
 import Motivation from "./content/Footer/Motivation";
 function App() {
   return (
-    <> 
+    <div style={{position:"relative"}}> 
+    <div style={{zIndex:2}}>
       <HomePage/>
       <Feedbacks/>
       <Motivation/>
+    </div>
       <Footer/>
-    </>
+    </div>
   );
 }
 
