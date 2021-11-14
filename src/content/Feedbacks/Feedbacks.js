@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Feedbacks() {
   return (
-    <Container maxWidth="xl" sx={{ py: "2rem" ,background:"#FFFFFF", boxShadow: "inset 0px 2px 6px 0px  rgb(124 133 145 / 77%)",}}>
+    <Container maxWidth="xl" sx={classes.root}>
       <Grid container spacing={3}>
         {feedbacks.map((feedback, index) => (
           <Grid key={index} item xs={12} md={4}>
@@ -26,6 +26,11 @@ const Feedback = ({ feedback }) => {
 };
 
 const classes = {
+  root: {
+    py: "2rem",
+    background: "#FFFFFF",
+    boxShadow: "inset 0px 10px 7px -5px rgb(124 133 145 / 77%)",
+  },
   feedbackBox: {
     border: "1px solid #d4d8de",
     borderRadius: "8px",

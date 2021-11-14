@@ -4,13 +4,7 @@ import React from "react";
 
 export default function Motivation() {
   return (
-    <Container
-      maxWidth="xl"
-      sx={{
-        background: "#FFFFFF",
-        boxShadow: "0 2px 6px 0 rgb(124 133 145 / 77%)",
-      }}
-    >
+    <Container maxWidth="xl" sx={classes.root}>
       <Divider />
       <Box py="3rem">
         <Typography sx={classes.motivation} paragraph>
@@ -40,6 +34,10 @@ export default function Motivation() {
 }
 
 const classes = {
+  root: {
+    background: "#FFFFFF",
+    boxShadow: "inset 0px -14px 9px -11px  rgb(124 133 145 / 77%)",
+  },
   motivation: {
     color: "#505965",
     fontWeight: "300",
