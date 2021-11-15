@@ -2,8 +2,8 @@ import { Button, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/system";
-import React from "react";
-
+import React, { useContext } from "react";
+import { DialogContext } from "./HomeRoot";
 export default function InnerHome() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -11,18 +11,27 @@ export default function InnerHome() {
 }
 
 const WebRender = () => {
+  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
+
   return (
     <Box sx={classes.InnerHome}>
       <Stack direction="column" spacing={4} alignItems="center">
         <Typography variant="h1" sx={classes.headTitle}>
           Swipe Right®
         </Typography>
-        <Button sx={classes.signUp}>Create Account</Button>
+        <Button
+          sx={classes.signUp}
+          onClick={() => setDialogStatus(!DialogStatus)}
+        >
+          Create Account
+        </Button>
       </Stack>
     </Box>
   );
 };
 const MobileRender = () => {
+  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
+
   return (
     <Box sx={classes.InnerHome}>
       <Typography variant="h1" sx={classes.MobileheadTitle}>
@@ -34,10 +43,18 @@ const MobileRender = () => {
         alignItems="center"
         sx={{ width: "80%" }}
       >
-        <Button sx={classes.MobilesignUp} fullWidth>
+        <Button
+          sx={classes.MobilesignUp}
+          fullWidth
+          onClick={() => setDialogStatus(!DialogStatus)}
+        >
           Create Account
         </Button>
-        <Button sx={classes.MobileLogin} fullWidth>
+        <Button
+          sx={classes.MobileLogin}
+          fullWidth
+          onClick={() => setDialogStatus(!DialogStatus)}
+        >
           Login
         </Button>
       </Stack>
@@ -72,10 +89,12 @@ const classes = {
     width: "315px",
     minHeight: "55px",
     borderRadius: "12em",
+    fontWeight: "600",
   },
   MobilesignUp: {
     background: "#FFFFFF !important",
     color: "#000000",
+
     minHeight: "55px",
     borderRadius: "12em",
     textTransform: "capitalize",
@@ -86,7 +105,7 @@ const classes = {
     color: "#FFFFFF",
     minHeight: "55px",
     borderRadius: "12em",
-    outline: "#FFFFFF 2px solid",
+    border: "#FFFFFF 2px solid",
     textTransform: "capitalize",
     fontWeight: "600",
   },

@@ -1,0 +1,11 @@
+@keyframes fade {
+    from {
+      font-size: 5rem;
+    }
+    to {
+      font-size: 6rem;
+    }
+  }
+  .fadeUp {
+    animation: linear .5s infinite alternate fade;
+  }

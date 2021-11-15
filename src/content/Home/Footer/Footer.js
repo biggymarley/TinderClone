@@ -1,16 +1,14 @@
-import React from "react";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import {
   Container,
   Grid,
-  IconButton,
-  Link,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import React from "react";
 
 export default function Footer() {
   return (
@@ -30,9 +28,7 @@ export default function Footer() {
                 {content?.items?.map((item, index) =>
                   content.isIcon ? (
                     <a href="/" key={index}>
-                      {/* // <IconButton> */}
                       {item.label}
-                      {/* // </IconButton> */}
                     </a>
                   ) : (
                     <Typography key={index} sx={classes.links}>

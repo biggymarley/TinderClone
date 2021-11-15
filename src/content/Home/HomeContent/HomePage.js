@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import React from "react";
-import { StickyHeader } from "./Header";
+import { StickyHeader } from "../Header/Header";
 import InnerHome from "./InnerHome";
 export default function HomePage() {
   return (

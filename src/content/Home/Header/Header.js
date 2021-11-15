@@ -3,8 +3,9 @@ import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useContext } from "react";
 import { Logo } from "../ContentFactory/IconFactory";
+import { DialogContext } from "../HomeContent/HomeRoot";
 export const StickyHeader = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -24,12 +25,20 @@ export const StickyHeader = () => {
 };
 
 const WebRender = () => {
-  return <Button sx={classes.LoginButton}>Log in</Button>;
+  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
+  return (
+    <Button
+      sx={classes.LoginButton}
+      onClick={() => setDialogStatus(!DialogStatus)}
+    >
+      Log in
+    </Button>
+  );
 };
 const MobileRender = () => {
   return (
     <IconButton>
-      <MenuRoundedIcon sx={{color:"#FFFFFF"}}/>
+      <MenuRoundedIcon sx={{ color: "#FFFFFF" }} />
     </IconButton>
   );
 };
@@ -37,7 +46,7 @@ const MobileRender = () => {
 const classes = {
   Header: {
     boxShadow: "inset 0px 44px 29px -17px #000000",
-    px: {xs: ".2rem",sm: ".5rem", lg:"1rem"},
+    px: { xs: ".2rem", sm: ".5rem", lg: "1rem" },
   },
   Logo: {
     width: { xs: "30px", md: "39.936px" },

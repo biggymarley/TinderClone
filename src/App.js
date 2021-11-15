@@ -1,18 +1,20 @@
-import HomePage from "./content/Home/HomePage";
-import { Box } from "@mui/system";
-import Feedbacks from "./content/Feedbacks/Feedbacks";
-import Footer from "./content/Footer/Footer";
-import Motivation from "./content/Footer/Motivation";
+import React, { Suspense } from "react";
+import Loading from './Loading/Loading';
+
 function App() {
+  const HomeRoot = React.lazy(async () => {
+    return new Promise((resolve) => {
+      setTimeout(
+        () => resolve(import("./content/Home/HomeContent/HomeRoot")),
+        100
+      );
+    });
+  });
+
   return (
-    <div style={{position:"relative"}}> 
-    <div style={{zIndex:2}}>
-      <HomePage/>
-      <Feedbacks/>
-      <Motivation/>
-    </div>
-      <Footer/>
-    </div>
+    <Suspense fallback={<Loading />}>
+      <HomeRoot />
+    </Suspense>
   );
 }
 
