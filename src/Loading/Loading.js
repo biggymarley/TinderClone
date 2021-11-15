@@ -5,7 +5,7 @@ import "./animation.css";
 const Loading = () => {
   return (
     <Box sx={classes.Loading}>
-      <Logo sx={{ fontSize: "5rem" }} className="fadeUp" />
+      <Logo sx={{ fontSize: "5rem", color:"#FFFFFF" }} className="fadeUp" />
     </Box>
   );
 };

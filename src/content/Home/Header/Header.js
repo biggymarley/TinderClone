@@ -51,13 +51,14 @@ const classes = {
   Logo: {
     width: { xs: "30px", md: "39.936px" },
     height: { xs: "40px", md: "52.97355px" },
+    color: "#FFFFFF",
   },
   LogoName: {
     fontFamily: "Gotham",
     fontSize: { xs: "1.5rem", md: "2.4rem" },
     color: "white",
     lightHeight: "0",
-    letterSpacing: "-2px",
+    letterSpacing: "-3px",
   },
   LoginButton: {
     backgroundColor: "#FFFFFF",
@@ -68,5 +69,8 @@ const classes = {
     px: "24px",
     minHeight: "40px",
     textTransform: "capitalize",
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+    },
   },
 };

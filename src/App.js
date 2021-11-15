@@ -6,7 +6,7 @@ function App() {
     return new Promise((resolve) => {
       setTimeout(
         () => resolve(import("./content/Home/HomeContent/HomeRoot")),
-        100
+        1000
       );
     });
   });
