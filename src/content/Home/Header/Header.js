@@ -1,4 +1,3 @@
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -25,11 +24,11 @@ export const StickyHeader = () => {
 };
 
 const WebRender = () => {
-  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
+  const { OpenDialog } = useContext(DialogContext);
   return (
     <Button
       sx={classes.LoginButton}
-      onClick={() => setDialogStatus(!DialogStatus)}
+      onClick={OpenDialog}
     >
       Log in
     </Button>
@@ -37,9 +36,10 @@ const WebRender = () => {
 };
 const MobileRender = () => {
   return (
-    <IconButton>
-      <MenuRoundedIcon sx={{ color: "#FFFFFF" }} />
-    </IconButton>
+    <></>
+    // <IconButton>
+    //   <MenuRoundedIcon sx={{ color: "#FFFFFF" }} />
+    // </IconButton>
   );
 };
 

@@ -2,27 +2,35 @@ import { Button, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/system";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { DialogContext } from "./HomeRoot";
+
 export default function InnerHome() {
+  const opacityRef = useRef(undefined);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-  return matches ? <WebRender /> : <MobileRender />;
+  return matches ? <WebRender opacityRef={opacityRef} /> : <MobileRender />;
 }
 
-const WebRender = () => {
-  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
-
+const WebRender = ({ opacityRef }) => {
+  const { OpenDialog } = useContext(DialogContext);
+  useEffect(() => {
+    window.addEventListener("scroll", (e) => {
+      if (opacityRef && opacityRef.current !== null) {
+        if (window.scrollY === 0) opacityRef.current.style.opacity = 1;
+        else if (window.scrollY > opacityRef.current.clientHeight / 2)
+          opacityRef.current.style.opacity = 0;
+        else opacityRef.current.style.opacity = 1 / (window.scrollY / 50);
+      }
+    });
+  }, [opacityRef]);
   return (
-    <Box sx={classes.InnerHome}>
+    <Box sx={classes.InnerHome} ref={opacityRef}>
       <Stack direction="column" spacing={4} alignItems="center">
         <Typography variant="h1" sx={classes.headTitle}>
-          Swipe Right®
+          Swipe Right<sup>®</sup>
         </Typography>
-        <Button
-          sx={classes.signUp}
-          onClick={() => setDialogStatus(!DialogStatus)}
-        >
+        <Button sx={classes.signUp} onClick={OpenDialog}>
           Create Account
         </Button>
       </Stack>
@@ -30,12 +38,11 @@ const WebRender = () => {
   );
 };
 const MobileRender = () => {
-  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
-
+  const { OpenDialog } = useContext(DialogContext);
   return (
     <Box sx={classes.InnerHome}>
       <Typography variant="h1" sx={classes.MobileheadTitle}>
-        Swipe Right®
+        Swipe Right<sup>®</sup>
       </Typography>
       <Stack
         direction="column"
@@ -43,18 +50,10 @@ const MobileRender = () => {
         alignItems="center"
         sx={{ width: "80%" }}
       >
-        <Button
-          sx={classes.MobilesignUp}
-          fullWidth
-          onClick={() => setDialogStatus(!DialogStatus)}
-        >
+        <Button sx={classes.MobilesignUp} fullWidth onClick={OpenDialog}>
           Create Account
         </Button>
-        <Button
-          sx={classes.MobileLogin}
-          fullWidth
-          onClick={() => setDialogStatus(!DialogStatus)}
-        >
+        <Button sx={classes.MobileLogin} fullWidth onClick={OpenDialog}>
           Login
         </Button>
       </Stack>

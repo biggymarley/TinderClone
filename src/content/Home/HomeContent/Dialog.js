@@ -1,4 +1,4 @@
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import Grid3x3RoundedIcon from "@mui/icons-material/Grid3x3Rounded";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import {
   Button,
@@ -13,36 +13,63 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useContext } from "react";
 import { Facebook, Google, Logo } from "../ContentFactory/IconFactory";
-import { DialogContext } from "./HomeRoot";
+import { DialogContext, IndexContext } from "./HomeRoot";
+import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
+
+const Enums = {
+  LOGIN: "LOGIN",
+  SIGNUP: "SIGNUP",
+};
+
 export default function DialogUser() {
-  const { DialogStatus, setDialogStatus } = useContext(DialogContext);
+  const { DialogStatus, CloseDialog } = useContext(DialogContext);
+  const { DialogIndex } = useContext(IndexContext);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
-
   return (
     <Dialog
-      onClose={() => setDialogStatus(false)}
+      onClose={CloseDialog}
       open={DialogStatus}
       fullScreen={matches ? false : true}
       sx={classes.root}
     >
-      <IconButton sx={classes.close} onClick={() => setDialogStatus(false)}>
+      <IconButton sx={classes.close} onClick={CloseDialog}>
         <HighlightOffRoundedIcon sx={classes.closeIcon} />
       </IconButton>
-      <Stack
-        sx={classes.innerDialog}
-        direction="column"
-        spacing={3}
-        alignItems="center"
-      >
-        <CreateAccount />
-        <Avatars />
-      </Stack>
+      <FormHandler index={DialogIndex} />
     </Dialog>
   );
 }
+const FormHandler = ({ index }) => {
+  switch (index) {
+    case Enums.LOGIN:
+      return <LoginForm />;
+
+    case Enums.SIGNUP:
+      return <SignupForm />;
+
+    default:
+      return <DefaultForm />;
+  }
+};
+
+const DefaultForm = () => {
+  return (
+    <Stack
+      sx={classes.innerDialog}
+      direction="column"
+      spacing={3}
+      alignItems="center"
+    >
+      <CreateAccount />
+      <Avatars />
+    </Stack>
+  );
+};
 
 const CreateAccount = () => {
+  const { setDialogIndex } = useContext(IndexContext);
   return (
     <>
       <Logo sx={classes.logo} />
@@ -55,14 +82,38 @@ const CreateAccount = () => {
         in our <span style={classes.link}>Privacy Policy</span> and{" "}
         <span style={classes.link}>Cookie Policy</span>
       </Typography>
-      {buttons.map((btn, index) => (
-        <Button key={index} sx={classes.LoginButton} fullWidth>
-          {btn.icon}
-          {btn.label}
-        </Button>
-      ))}
-      <Typography sx={classes.paswd}>Forgot Password ?</Typography>
-      <Divider fullWidth sx={{ width: "100%" }} />
+      <Button
+        sx={classes.LoginButton}
+        onClick={() => setDialogIndex(Enums.SIGNUP)}
+        fullWidth
+      >
+        Create Account
+      </Button>
+      <Divider sx={{ width: "100%" }}>
+        <Typography sx={classes.desc} style={{ fontWeight: 600 }}>
+          Or
+        </Typography>
+      </Divider>
+      {buttons.map((btn, index) =>
+        btn.formindex ? (
+          <Button
+            key={index}
+            sx={classes.LoginButton}
+            fullWidth
+            onClick={() => setDialogIndex(btn.formindex)}
+          >
+            {btn.icon}
+            {btn.label}
+          </Button>
+        ) : (
+          <Button key={index} sx={classes.LoginButton} fullWidth>
+            {btn.icon}
+            {btn.label}
+          </Button>
+        )
+      )}
+      
+      <Divider sx={{ width: "100%" }} />
       <Typography sx={classes.TitleAvatars}>Check Our Githubs</Typography>
     </>
   );
@@ -111,8 +162,18 @@ const classes = {
     position: "absolute",
     right: 10,
     top: 10,
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
   },
-  closeIcon: { fontSize: "2rem", color: "#d4d8de" },
+  closeIcon: {
+    fontSize: "2rem",
+    color: "#d4d8de",
+    transition: "transform .2s ease",
+    "&:hover": {
+      transform: "rotate(90deg)",
+    },
+  },
   LoginButton: {
     color: "#191e25",
     borderRadius: "12em",
@@ -125,6 +186,7 @@ const classes = {
   },
   innerDialog: {
     maxWidth: "400px",
+    width:"80vw",
     px: "44px",
     py: "30px",
     textAlign: "center",
@@ -152,16 +214,7 @@ const classes = {
     fontSize: ".9rem",
     fontWeight: 300,
   },
-  paswd: {
-    fontFamily: "Roboto",
-    fontSize: ".9rem",
-    fontWeight: 300,
-    cursor: "pointer",
-    textDecoration: "underline",
-    "&:hover": {
-      textDecoration: "none",
-    },
-  },
+
   link: {
     fontWeight: 900,
     textDecoration: "underline",
@@ -185,7 +238,8 @@ const buttons = [
     icon: <Facebook sx={classes.icon} />,
   },
   {
-    label: "Log In With Email",
-    icon: <AlternateEmailIcon sx={classes.icon} />,
+    label: "Log In With username",
+    icon: <Grid3x3RoundedIcon sx={classes.icon} />,
+    formindex: Enums.LOGIN,
   },
 ];

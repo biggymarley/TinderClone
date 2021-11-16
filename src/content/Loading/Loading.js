@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { Logo } from "../content/Home/ContentFactory/IconFactory";
+import { Logo } from "../Home/ContentFactory/IconFactory";
 import "./animation.css";
 
 const Loading = () => {

@@ -1,19 +1,21 @@
 import React, { Suspense } from "react";
-import Loading from './Loading/Loading';
+import Loading from './content/Loading/Loading';
 
 function App() {
   const HomeRoot = React.lazy(async () => {
     return new Promise((resolve) => {
       setTimeout(
         () => resolve(import("./content/Home/HomeContent/HomeRoot")),
-        1000
+        2000
       );
     });
   });
 
   return (
     <Suspense fallback={<Loading />}>
+      <div className='fadein'>
       <HomeRoot />
+      </div>
     </Suspense>
   );
 }

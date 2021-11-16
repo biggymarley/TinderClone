@@ -21,7 +21,7 @@ export default function Footer() {
                 {content.head}
               </Typography>
               <Stack
-                direction={content.isIcon ? "row" : "column"}
+                direction={content.isIcon ? {xs: 'column', sm:"row" }: "column"}
                 spacing={1}
                 sx={{ paddingBottom: { xs: "2rem", sm: 0 } }}
               >

@@ -29,7 +29,7 @@ export const Logo = (props) => {
 export const Google = (props) => {
   return (
     <SvgIcon {...props} viewBox="0 0 18 18">
-      <g fill="none" fill-rule="nonzero">
+      <g fill="none" fillRule="nonzero">
         <path
           fill="#4285F4"
           d="M17.6 9.2l-.1-1.8H9v3.4h4.8C13.6 12 13 13 12 13.6v2.2h3a8.8 8.8 0 0 0 2.6-6.6z"
@@ -57,7 +57,7 @@ export const Facebook = (props) => {
     <SvgIcon {...props} viewBox="0 0 18 18">
       <path
         fill="#298CFA"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M18 9.053C18 4.053 13.97 0 9 0S0 4.053 0 9.053c0 4.519 3.291 8.264 7.594 8.943V11.67H5.309V9.053h2.285V7.059c0-2.27 1.343-3.523 3.4-3.523.984 0 2.014.177 2.014.177v2.228h-1.135c-1.118 0-1.467.698-1.467 1.414v1.698h2.496l-.399 2.617h-2.097v6.326C14.71 17.317 18 13.572 18 9.053"
       />
     </SvgIcon>

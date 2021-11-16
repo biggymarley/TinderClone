@@ -2,6 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { StickyHeader } from "../Header/Header";
 import InnerHome from "./InnerHome";
+import homebg from '../../../assets/imgs/homebg.webp'
 export default function HomePage() {
   return (
     <Box sx={classes.HomePage}>
@@ -16,13 +17,12 @@ export default function HomePage() {
 const classes = {
   HomePage: {
     height: "100vh",
-    backgroundImage: "url(/imgs/homebg.webp)",
+    backgroundImage: `url(${homebg})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    backgroundAttachment:"fixed",
     backgroundPosition: "50%",
     boxShadow:'0 2px 6px 0 rgb(124 133 145 / 77%)',
-    // marginBottom:"3rem",
-    backgroundAttachment:"fixed"
   },
   FrontBgColor: {
     backgroundColor: "rgba(0,0,0,.4)",
