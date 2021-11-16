@@ -104,6 +104,12 @@ export default function LoginForm() {
           />
         </Grid>
       </Grid>
+      <Typography sx={classes.desc}>
+        By clicking Create Account, you agree to our{" "}
+        <span style={classes.link}>Terms</span>. Learn how we process your data
+        in our <span style={classes.link}>Privacy Policy</span> and{" "}
+        <span style={classes.link}>Cookie Policy</span>
+      </Typography>
       <Button
         sx={classes.LoginButton}
         variant="contained"

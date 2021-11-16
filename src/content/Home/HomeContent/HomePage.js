@@ -18,6 +18,7 @@ const classes = {
   HomePage: {
     height: "100vh",
     backgroundImage: `url(${homebg})`,
+    backgroundColor:"#000000",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundAttachment:"fixed",
