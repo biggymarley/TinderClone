@@ -61,7 +61,7 @@ const classes = {
   innerDialog: {
     maxWidth: "400px",
     width: "80vw",
-    px: "44px",
+    px: { xs: "0", md: "44px" },
     py: "30px",
     textAlign: "center",
   },

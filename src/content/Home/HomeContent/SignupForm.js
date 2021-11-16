@@ -40,7 +40,7 @@ export default function LoginForm() {
       <Typography variant="h3" sx={classes.TitleHead}>
         Create Account
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={{xs:0, sm:2}}>
         <Grid item xs={12} sm={6}>
           <TextField
             name="Firstname"
@@ -125,7 +125,7 @@ const classes = {
   innerDialog: {
     maxWidth: "400px",
     width: "80vw",
-    px: "44px",
+    px: { xs: "0", md: "44px" },
     py: "30px",
     textAlign: "center",
   },
@@ -168,6 +168,7 @@ const classes = {
   },
   textField: {
     borderRadius: "2em",
+    paddingBottom:  { xs: "1rem", sm: "0" },
     "& input": {
       borderRadius: "2em !important",
     },

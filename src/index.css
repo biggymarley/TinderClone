@@ -19,18 +19,20 @@ code {
 
 ::-webkit-scrollbar {
   width: 5px;
+  /* display: none; */
 }
 ::-webkit-scrollbar-track {
   margin: 5px 0;
   width: 0px;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(225deg, #ff6036, #fd267a);
+  background: #afafafd7;
   border-radius: 12em;
 }
 
 body::-webkit-scrollbar {
   width: 8px !important;
+  display: block;
 }
 body::-webkit-scrollbar-track {
   background: #000000 !important;
