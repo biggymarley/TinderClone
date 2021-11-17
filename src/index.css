@@ -59,12 +59,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .VisibleChebox {
-  border: 2px solid rgba(0, 0, 0, 0.404);
+  border: 2px solid #505965;
   font-size: 1rem;
   font-family: "Roboto";
   padding: 1rem 1.5rem;
   border-radius: 10px;
-  color:rgba(0, 0, 0, 0.404);
+  color:#505965;
 }
 
 .hiddenChebox {

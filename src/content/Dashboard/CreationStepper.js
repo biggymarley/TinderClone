@@ -30,21 +30,31 @@ const Stepper = () => {
         Create Account
       </Typography>
       <Grid container spacing={2}>
-        <Grid>
-          <input type="radio" name="s-size" id="Man" className="hiddenChebox"  />
-          <label htmlFor="Man"  className="VisibleChebox">
-            Man
-          </label>
+        <Grid item>
+          <Gender />
         </Grid>
-        <Grid>
-        <input type="radio" name="s-size" id="Woman" className="hiddenChebox"  />
-          <label htmlFor="Woman"  className="VisibleChebox">
-            Woman
-          </label>
-        </Grid>
+        <Grid item></Grid>
         <Grid></Grid>
       </Grid>
     </Container>
+  );
+};
+const Gender = () => {
+  return (
+    <Stack direction="row" spacing={2}>
+      <div>
+        <input type="radio" name="s-size" id="Woman" className="hiddenChebox" />
+        <label htmlFor="Woman" className="VisibleChebox">
+          Woman
+        </label>
+      </div>
+      <div>
+        <input type="radio" name="s-size" id="Man" className="hiddenChebox" />
+        <label htmlFor="Man" className="VisibleChebox">
+          Man
+        </label>
+      </div>
+    </Stack>
   );
 };
 
@@ -74,5 +84,6 @@ const classes = {
     fontStyle: "italic",
     fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
     textTransform: "uppercase",
+    paddingBottom: { xs: "4rem", sm: "5rem" },
   },
 };
