@@ -38,10 +38,17 @@ const Stepper = () => {
       Gender: "",
       SexualPreferences: "",
       Biografy: "",
+      pic1: null,
+      pic2: null,
+      pic3: null,
+      pic4: null,
+      pic5: null,
+      profilePic: "",
     },
 
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      console.log(values);
     },
   });
   return (
@@ -51,7 +58,7 @@ const Stepper = () => {
       </Typography>
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={2} rowSpacing={5}  sx={classes.Gridroot}>
+          <Grid container spacing={2} rowSpacing={5} sx={classes.Gridroot}>
             <Grid item xs={12} sm={6}>
               <Gender />
             </Grid>
@@ -76,43 +83,71 @@ const Stepper = () => {
   );
 };
 const UploadImages = () => {
+  const formik = React.useContext(FormikContext);
+  const handlUpload = (e) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      formik.setFieldValue(e.target.name, reader.result);
+    };
+    reader.onerror = (error) => {
+      formik.setFieldValue(e.target.name, null);
+    };
+  };
   return (
     <Box sx={classes.UploadRoot}>
+      <Typography sx={classes.desc} paragraph>
+        Click on your Uploaded picture to choose you Profile image
+      </Typography>
       <Grid
         container
         spacing={5}
         justifyContent={{ xs: "center", md: "space-between" }}
         alignItems="center"
       >
-        <Grid item>
-          <Box sx={classes.ImgBox}>
-            <AddCircleRoundedIcon sx={classes.addButton} />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box sx={classes.ImgBox}>
-            <AddCircleRoundedIcon sx={classes.addButton} />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box sx={classes.ImgBox}>
-            <AddCircleRoundedIcon sx={classes.addButton} />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box sx={classes.ImgBox}>
-            <AddCircleRoundedIcon sx={classes.addButton} />
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box sx={classes.ImgBox}>
-            <AddCircleRoundedIcon sx={classes.addButton} />
-          </Box>
-        </Grid>
+        {["pic1", "pic2", "pic3", "pic4", "pic5"].map((elem, index) => (
+          <Grid item key={index}>
+            <Box sx={classes.ImgBox} className="ImgBox">
+              <input
+                type="file"
+                id={elem}
+                name={elem}
+                style={{ display: "none" }}
+                onChange={handlUpload}
+              />
+              <label htmlFor={elem}>
+                <AddCircleRoundedIcon sx={classes.addButton} />
+              </label>
+              <img src={formik.values[elem]} style={classes.innerImg} alt="pic"/>
+              {formik?.values && formik.values[elem] ? (
+                <ChooseBox elem={elem} />
+              ) : (
+                false
+              )}
+            </Box>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );
 };
+
+const ChooseBox = ({ elem }) => {
+  const formik = React.useContext(FormikContext);
+  return (
+    <Box
+      sx={classes.ChooseBox}
+      className="ChooseBox"
+      style={formik.values.profilePic === elem ? { opacity: 1 } : {}}
+      onClick={() => formik.setFieldValue("profilePic", elem)}
+    >
+      <Typography sx={classes.ChooseLabel}>
+        {formik.values.profilePic === elem ? "Profile Picture" : "Choose"}
+      </Typography>
+    </Box>
+  );
+};
+
 const Biografy = () => {
   const formik = React.useContext(FormikContext);
   return (
@@ -232,21 +267,54 @@ const classes = {
     border: "1px solid #505965",
     borderRadius: "10px",
     position: "relative",
+    display: "flex",
+    placeItems: "center",
+  },
+  ChooseBox: {
+    position: "absolute",
+    minHeight: "12rem",
+    minWidth: "9rem",
+    display: "grid",
+    placeItems: "center",
+    backgroundColor: "#00000047",
+    borderRadius: "10px",
+    zIndex: 1,
+  },
+  ChooseLabel: {
+    fontFamily: "Roboto",
+    fontWeight: 500,
+    color: "#FFFFFF",
+    opacity: 0.5,
+  },
+  innerImg: {
+    minHeight: "12rem",
+    maxWidth: "9rem",
+    objectFit: "cover",
+    borderRadius: "10px",
   },
   addButton: {
     position: "absolute",
+    zIndex: 2,
     fontSize: "2rem",
     backgroundColor: "#FFFFFF",
     borderRadius: "50%",
     color: "secondary.main",
     top: "-.5rem",
     right: "-1rem",
-    transition:"all .2s ease",
-    cursor:"pointer",
-    "&:hover" :{
+    transition: "all .2s ease",
+    cursor: "pointer",
+    "&:hover": {
       color: "secondary.light",
       backgroundColor: "#e0e0e0",
-    }
+    },
+  },
+  desc: {
+    fontFamily: "Roboto",
+    fontSize: ".9rem",
+    fontWeight: 300,
+    textAlign: "center",
+    paddingBottom: "2rem",
+    opacity: 0.5,
   },
   StepperRppt: {
     display: "flex",
