@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { Logo } from "../ContentFactory/IconFactory";
+import { LogginContext } from '../../../App';
 
 export default function LoginForm() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const {Islogged, setIslogged} = useContext(LogginContext)
   const HandleChange = (e) => {
     e.preventDefault();
     if (e.target.name === "Email") setEmail(e.target.value);
@@ -48,6 +50,7 @@ export default function LoginForm() {
       </Typography>
       <Button
         sx={classes.LoginButton}
+        onClick={() => setIslogged(!Islogged)}
         variant="contained"
         disabled={Email === "" || Password === "" ? true : false}
       >
@@ -107,6 +110,7 @@ const classes = {
     "& input": {
       borderRadius: "2em !important",
     },
+
     "& label.Mui-focused": {
       color: "#505965",
     },

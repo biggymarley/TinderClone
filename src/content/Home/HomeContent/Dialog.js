@@ -112,7 +112,7 @@ const CreateAccount = () => {
           </Button>
         )
       )}
-      
+
       <Divider sx={{ width: "100%" }} />
       <Typography sx={classes.TitleAvatars}>Check Our Githubs</Typography>
     </>
@@ -186,7 +186,7 @@ const classes = {
   },
   innerDialog: {
     maxWidth: "400px",
-    width:"80vw",
+    width: "80vw",
     px: { xs: "0", md: "44px" },
     py: "30px",
     textAlign: "center",

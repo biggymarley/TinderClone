@@ -22,7 +22,7 @@ const classes = {
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundAttachment:"fixed",
-    backgroundPosition: "50%",
+    backgroundPosition: "-50vw",
     boxShadow:'0 2px 6px 0 rgb(124 133 145 / 77%)',
   },
   FrontBgColor: {
