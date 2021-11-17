@@ -9,7 +9,7 @@ function App() {
   return (
     <Suspense fallback={<Loading />}>
       <LogginContext.Provider value={{ Islogged, setIslogged }}>
-        <div className="fadein">{Islogged ? <Dashboard /> : <HomeRoot />}</div>
+        <div className="fadein">{Islogged ? <Dashboard /> : <Dashboard />}</div>
       </LogginContext.Provider>
     </Suspense>
   );

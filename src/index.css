@@ -57,3 +57,21 @@ body::-webkit-scrollbar-thumb {
 .fadein {
   animation: linear 0.5s normal fadeInFromNone;
 }
+
+.VisibleChebox {
+  border: 2px solid rgba(0, 0, 0, 0.404);
+  font-size: 1rem;
+  font-family: "Roboto";
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  color:rgba(0, 0, 0, 0.404);
+}
+
+.hiddenChebox {
+  display: none;
+}
+
+.hiddenChebox:checked ~ label {
+  border: 2px solid #fe3f61;
+  color: #fe3f61;
+}
