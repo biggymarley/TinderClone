@@ -62,16 +62,18 @@ body::-webkit-scrollbar-thumb {
   border: 2px solid #505965;
   font-size: 1rem;
   font-family: "Roboto";
-  padding: 1rem 1.5rem;
   border-radius: 10px;
+  padding: 1rem 1.5rem;
+  height:max-content;
   color:#505965;
+  cursor: pointer;
 }
 
 .hiddenChebox {
   display: none;
 }
 
-.hiddenChebox:checked ~ label {
+.hiddenChebox:checked ~ .VisibleChebox {
   border: 2px solid #fe3f61;
   color: #fe3f61;
 }
