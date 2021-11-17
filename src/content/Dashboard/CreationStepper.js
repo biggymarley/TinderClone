@@ -11,6 +11,7 @@ import React from "react";
 import { Logo } from "../Home/ContentFactory/IconFactory";
 import { Typography } from "@mui/material";
 import { FormikProvider, useFormik, FormikContext } from "formik";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 export default function CreationStepper() {
   return (
     <>
@@ -50,7 +51,7 @@ const Stepper = () => {
       </Typography>
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={2} rowSpacing={5} sx={classes.Gridroot}>
+          <Grid container spacing={2} rowSpacing={5}  sx={classes.Gridroot}>
             <Grid item xs={12} sm={6}>
               <Gender />
             </Grid>
@@ -77,21 +78,36 @@ const Stepper = () => {
 const UploadImages = () => {
   return (
     <Box sx={classes.UploadRoot}>
-      <Grid container spacing={5} justifyContent='center' alignItems="center">
+      <Grid
+        container
+        spacing={5}
+        justifyContent={{ xs: "center", md: "space-between" }}
+        alignItems="center"
+      >
         <Grid item>
-          <Box sx={classes.ImgBox}></Box>
+          <Box sx={classes.ImgBox}>
+            <AddCircleRoundedIcon sx={classes.addButton} />
+          </Box>
         </Grid>
         <Grid item>
-          <Box sx={classes.ImgBox}></Box>
+          <Box sx={classes.ImgBox}>
+            <AddCircleRoundedIcon sx={classes.addButton} />
+          </Box>
         </Grid>
         <Grid item>
-          <Box sx={classes.ImgBox}></Box>
+          <Box sx={classes.ImgBox}>
+            <AddCircleRoundedIcon sx={classes.addButton} />
+          </Box>
         </Grid>
         <Grid item>
-          <Box sx={classes.ImgBox}></Box>
+          <Box sx={classes.ImgBox}>
+            <AddCircleRoundedIcon sx={classes.addButton} />
+          </Box>
         </Grid>
         <Grid item>
-          <Box sx={classes.ImgBox}></Box>
+          <Box sx={classes.ImgBox}>
+            <AddCircleRoundedIcon sx={classes.addButton} />
+          </Box>
         </Grid>
       </Grid>
     </Box>
@@ -131,11 +147,9 @@ const Gender = () => {
             onChange={formik.handleChange}
             checked={formik?.values?.Gender === "Woman" ? true : false}
           />
-          <label htmlFor="Woman" className="VisibleChebox">
-
-             Woman
-
-          </label>
+          <Box className="VisibleChebox">
+            <label htmlFor="Woman">Woman</label>
+          </Box>
         </div>
         <div>
           <input
@@ -147,9 +161,9 @@ const Gender = () => {
             onChange={formik.handleChange}
             checked={formik?.values?.Gender === "Man" ? true : false}
           />
-          <label htmlFor="Man" className="VisibleChebox">
-            Man
-          </label>
+          <Box className="VisibleChebox">
+            <label htmlFor="Man">Man</label>
+          </Box>
         </div>
       </Stack>
     </Stack>
@@ -176,9 +190,9 @@ const SexualPreferences = () => {
                 : false
             }
           />
-          <label htmlFor="Heterosexual" className="VisibleChebox">
-            Heterosexual
-          </label>
+          <Box className="VisibleChebox">
+            <label htmlFor="Heterosexual">Heterosexual</label>
+          </Box>
         </div>
         <div>
           <input
@@ -192,9 +206,9 @@ const SexualPreferences = () => {
               formik?.values?.SexualPreferences === "Bisexual" ? true : false
             }
           />
-          <label htmlFor="Bi-sexual" className="VisibleChebox">
-            Bisexual
-          </label>
+          <Box className="VisibleChebox">
+            <label htmlFor="Bi-sexual">Bisexual</label>
+          </Box>
         </div>
       </Stack>
     </Stack>
@@ -212,17 +226,33 @@ const classes = {
     borderRadius: "10px",
     p: ".5rem",
   },
-  ImgBox:{
-    minHeight:"12rem",
+  ImgBox: {
+    minHeight: "12rem",
     minWidth: "9rem",
     border: "1px solid #505965",
-    borderRadius:"10px"
+    borderRadius: "10px",
+    position: "relative",
+  },
+  addButton: {
+    position: "absolute",
+    fontSize: "2rem",
+    backgroundColor: "#FFFFFF",
+    borderRadius: "50%",
+    color: "secondary.main",
+    top: "-.5rem",
+    right: "-1rem",
+    transition:"all .2s ease",
+    cursor:"pointer",
+    "&:hover" :{
+      color: "secondary.light",
+      backgroundColor: "#e0e0e0",
+    }
   },
   StepperRppt: {
     display: "flex",
     flexDirection: "column",
     paddingTop: { xs: "2rem", sm: "4rem" },
-    alignItems: "center",
+    // alignItems: "center",
   },
   Logo: {
     fontSize: { xs: "2rem", sm: "3rem" },
@@ -239,6 +269,8 @@ const classes = {
     fontStyle: "italic",
     fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
     textTransform: "uppercase",
+    textAlign: { xs: "center", md: "start" },
+    width: "100%",
     paddingBottom: { xs: "4rem", sm: "5rem" },
   },
   label: {
@@ -250,8 +282,8 @@ const classes = {
   Gridroot: {
     "& > .MuiGrid-item": {
       display: "flex",
-      justifyContent:{ xs: "center", sm: "flex-start" },
-      alignItems: { xs: "center", sm: "flex-start" },
+      justifyContent: { xs: "flex-start", sm: "flex-start" },
+      // alignItems: { xs: "center", sm: "flex-start" },
     },
   },
   TextField: {
@@ -261,7 +293,7 @@ const classes = {
       borderRadius: "10px !important",
     },
     "& textarea:valid ~ fieldset": {
-      borderColor: "secondary.main",
+      borderColor: "#fe3f61 !important",
       borderWidth: 2,
     },
     "& label.Mui-focused": {

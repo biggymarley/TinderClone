@@ -3,7 +3,7 @@ import Loading from "./content/Loading/Loading";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 export const LogginContext = React.createContext(false);
 function App() {
-  const [Islogged, setIslogged] = useState(false);
+  const [Islogged, setIslogged] = useState(true);
   const Dashboard = React.lazy(() => Getdashboard());
   const HomeRoot = React.lazy(() => GetHomeRoot());
 
@@ -18,7 +18,7 @@ const theme = createTheme({
     <ThemeProvider theme={theme}>
     <Suspense fallback={<Loading />}>
       <LogginContext.Provider value={{ Islogged, setIslogged }}>
-        <div className="fadein">{Islogged ? <Dashboard /> : <Dashboard />}</div>
+        <div className="fadein">{Islogged ? <Dashboard /> : <HomeRoot />}</div>
       </LogginContext.Provider>
     </Suspense>
     </ThemeProvider>
