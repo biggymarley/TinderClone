@@ -12,6 +12,7 @@ import { Logo } from "../Home/ContentFactory/IconFactory";
 import { Typography } from "@mui/material";
 import { FormikProvider, useFormik, FormikContext } from "formik";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+
 export default function CreationStepper() {
   return (
     <>
@@ -107,7 +108,15 @@ const UploadImages = () => {
       >
         {["pic1", "pic2", "pic3", "pic4", "pic5"].map((elem, index) => (
           <Grid item key={index}>
-            <Box sx={classes.ImgBox} className="ImgBox">
+            <Box
+              sx={classes.ImgBox}
+              className="ImgBox"
+              style={
+                formik?.values && formik.values.profilePic === elem
+                  ? classes.Choosen
+                  : {}
+              }
+            >
               <input
                 type="file"
                 id={elem}
@@ -118,9 +127,15 @@ const UploadImages = () => {
               <label htmlFor={elem}>
                 <AddCircleRoundedIcon sx={classes.addButton} />
               </label>
-              <img src={formik.values[elem]} style={classes.innerImg} alt="pic"/>
               {formik?.values && formik.values[elem] ? (
-                <ChooseBox elem={elem} />
+                <>
+                  <img
+                    src={formik.values[elem]}
+                    style={classes.innerImg}
+                    alt="pic"
+                  />
+                  <ChooseBox elem={elem} />
+                </>
               ) : (
                 false
               )}
@@ -169,23 +184,9 @@ const Biografy = () => {
 const Gender = () => {
   const formik = React.useContext(FormikContext);
   return (
-    <Stack direction="column" spacing={3}>
+    <Stack direction="column" spacing={3} sx={{ flexGrow: 1 }}>
       <Typography sx={classes.label}>Gender</Typography>
-      <Stack direction="row" spacing={2}>
-        <div>
-          <input
-            type="radio"
-            id="Woman"
-            className="hiddenChebox"
-            value={"Woman"}
-            name="Gender"
-            onChange={formik.handleChange}
-            checked={formik?.values?.Gender === "Woman" ? true : false}
-          />
-          <Box className="VisibleChebox">
-            <label htmlFor="Woman">Woman</label>
-          </Box>
-        </div>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
         <div>
           <input
             type="radio"
@@ -200,6 +201,20 @@ const Gender = () => {
             <label htmlFor="Man">Man</label>
           </Box>
         </div>
+        <div>
+          <input
+            type="radio"
+            id="Woman"
+            className="hiddenChebox"
+            value={"Woman"}
+            name="Gender"
+            onChange={formik.handleChange}
+            checked={formik?.values?.Gender === "Woman" ? true : false}
+          />
+          <Box className="VisibleChebox">
+            <label htmlFor="Woman">Woman</label>
+          </Box>
+        </div>
       </Stack>
     </Stack>
   );
@@ -208,9 +223,9 @@ const Gender = () => {
 const SexualPreferences = () => {
   const formik = React.useContext(FormikContext);
   return (
-    <Stack direction="column" spacing={3}>
+    <Stack direction="column" spacing={3} sx={{ flexGrow: 1 }}>
       <Typography sx={classes.label}>Sexual preferences</Typography>
-      <Stack direction="row" spacing={2}>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
         <div>
           <input
             type="radio"
@@ -245,6 +260,24 @@ const SexualPreferences = () => {
             <label htmlFor="Bi-sexual">Bisexual</label>
           </Box>
         </div>
+        {/* <div>
+          <input
+            type="radio"
+            id="Homosexual"
+            className="hiddenChebox"
+            value={"Homosexual"}
+            name="SexualPreferences"
+            onChange={formik.handleChange}
+            checked={
+              formik?.values?.SexualPreferences === "Homosexual"
+                ? true
+                : false
+            }
+          />
+          <Box className="VisibleChebox">
+            <label htmlFor="Homosexual">Homosexual</label>
+          </Box>
+        </div> */}
       </Stack>
     </Stack>
   );
@@ -269,6 +302,10 @@ const classes = {
     position: "relative",
     display: "flex",
     placeItems: "center",
+    transition:"box-shadow .2s ease"
+  },
+  Choosen: {
+    boxShadow:"0 0 0pt 2pt #fe3f61",
   },
   ChooseBox: {
     position: "absolute",

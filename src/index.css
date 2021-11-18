@@ -63,7 +63,7 @@ body::-webkit-scrollbar-thumb {
   font-size: 1rem;
   font-family: "Roboto";
   border-radius: 10px;
-  padding: 0 min(1.5vw, 1.5rem);
+  padding: 0 min(5vw, 1.5rem);
   min-height: 45px;
   color: #505965;
   display: grid;

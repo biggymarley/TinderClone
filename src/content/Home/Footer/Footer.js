@@ -2,41 +2,24 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import {
-  Container,
-  Grid,
-  Stack,
-  Typography
-} from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-
+// xs={content.grid.xs} sm={content.grid.sm}
 export default function Footer() {
   return (
     <footer style={classes.Footer}>
       <Container maxWidth="lg">
         <Grid container>
           {contents.map((content, index) => (
-            <Grid item key={index} sx={{ flexGrow: 1 }}>
+            <Grid item key={index} sx={{ flexGrow: 1 }} md={content.grid.md}>
               <Typography sx={classes.headTitle} paragraph>
                 {content.head}
               </Typography>
-              <Stack
-                direction={content.isIcon ? {xs: 'column', sm:"row" }: "column"}
-                spacing={1}
-                sx={{ paddingBottom: { xs: "2rem", sm: 0 } }}
-              >
-                {content?.items?.map((item, index) =>
-                  content.isIcon ? (
-                    <a href="/" key={index}>
-                      {item.label}
-                    </a>
-                  ) : (
-                    <Typography key={index} sx={classes.links}>
-                      {item.label}
-                    </Typography>
-                  )
-                )}
-              </Stack>
+              {content.isIcon ? (
+                <SocialIcons content={content} />
+              ) : (
+                <Links content={content} />
+              )}
             </Grid>
           ))}
         </Grid>
@@ -44,6 +27,36 @@ export default function Footer() {
     </footer>
   );
 }
+
+const SocialIcons = ({ content }) => {
+  return (
+    <Grid container spacing={2}>
+      {content?.items?.map((item, index) => (
+        <Grid item sx={classes.links} key={index} >
+          <a href={item.link} style={classes.icon}>
+            {item.label}
+          </a>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+
+const Links = ({ content }) => {
+  return (
+    <Stack
+      direction="column"
+      spacing={1}
+      sx={{ paddingBottom: { xs: "2rem", sm: 0 } }}
+    >
+      {content?.items?.map((item, index) => (
+        <Typography sx={classes.links} key={index}>
+          {item.label}
+        </Typography>
+      ))}
+    </Stack>
+  );
+};
 
 const classes = {
   Footer: {
@@ -68,6 +81,11 @@ const classes = {
 const contents = [
   {
     head: "LEGAL",
+    grid: {
+      xs: 12,
+      sm: 6,
+      md: 3,
+    },
     items: [
       {
         label: "Privacy",
@@ -89,6 +107,11 @@ const contents = [
   },
   {
     head: "Team",
+    grid: {
+      xs: 12,
+      sm: 6,
+      md: 3,
+    },
     items: [
       {
         label: "Ayoub FARAGI",
@@ -102,6 +125,11 @@ const contents = [
   },
   {
     head: "SOCIAL",
+    grid: {
+      xs: 12,
+      sm: 6,
+      md: 3,
+    },
     isIcon: true,
     items: [
       {
@@ -114,7 +142,7 @@ const contents = [
       },
       {
         label: <GitHubIcon sx={classes.icon} />,
-        link: "",
+        link: "https://github.com/biggymarley/TinderClonePreview",
       },
       {
         label: <TwitterIcon sx={classes.icon} />,
@@ -124,6 +152,11 @@ const contents = [
   },
   {
     head: "",
+    grid: {
+      xs: 12,
+      sm: 6,
+      md: 3,
+    },
     items: [
       {
         label: "FAQ",
