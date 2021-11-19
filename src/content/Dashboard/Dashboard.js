@@ -2,16 +2,26 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Avatar, Button, IconButton, Slide, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  Slide,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Tab from "@mui/material/Tab";
 import Toolbar from "@mui/material/Toolbar";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { Logo } from "../Home/ContentFactory/IconFactory";
 import { LogginContext } from "../../App";
 const drawerWidth = 375;
 
 export default function Dashboard() {
+  const [TabsIndex, setTabsIndex] = useState("Maintab");
+
   return (
     <Box sx={{ display: "flex" }}>
       <Drawer
@@ -20,14 +30,15 @@ export default function Dashboard() {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            overflow: "hidden",
             boxSizing: "border-box",
           },
         }}
         variant="permanent"
         anchor="left"
       >
-        <DraweHeader />
-        <MainTab />
+        <DraweHeader TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
+        <MainTab value={TabsIndex} />
       </Drawer>
       <Box
         component="main"
@@ -39,15 +50,31 @@ export default function Dashboard() {
   );
 }
 
-function MainTab() {
+function MainTab({ value }) {
+  return (
+    <TabContext value={value} textColor="secondary" indicatorColor="secondary">
+      <Slide direction="right" in={value === "Maintab"}>
+        <TabPanel value="Maintab" sx={{ padding: "0 !important" }}>
+          <HomeTab />
+        </TabPanel>
+      </Slide>
+      <Slide direction="left" in={value === "ProfileTab"}>
+        <TabPanel value="ProfileTab" sx={{ padding: "0 !important" }}>
+          <ProfileTab />
+        </TabPanel>
+      </Slide>
+    </TabContext>
+  );
+}
+
+const HomeTab = () => {
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
-    <Box sx={{ width: "100%", typography: "body1",overflow:"hidden" }}>
+    <Box sx={{ width: "100%", typography: "body1" }}>
       <TabContext
         value={value}
         textColor="secondary"
@@ -69,20 +96,25 @@ function MainTab() {
           <TabPanel value="1">Matches</TabPanel>
         </Slide>
         <Slide direction="left" in={value === "2"}>
-        <TabPanel value="2">Messages</TabPanel>
+          <TabPanel value="2">Messages</TabPanel>
         </Slide>
       </TabContext>
     </Box>
   );
-}
+};
 
-const DraweHeader = () => {
+const ProfileTab = () => {
+  return <Box>Hello</Box>;
+};
+
+const DraweHeader = ({ TabsIndex, setTabsIndex }) => {
   const { setIslogged } = useContext(LogginContext);
 
   return (
     <Toolbar sx={classes.HeaderRoot}>
       <Box sx={{ flexGrow: 1 }}>
         <Button
+          onClick={() => setTabsIndex("ProfileTab")}
           sx={classes.UserButton}
           startIcon={
             <Avatar
@@ -95,9 +127,25 @@ const DraweHeader = () => {
           <Typography sx={classes.userName}>Biggy</Typography>
         </Button>
       </Box>
-      <IconButton sx={classes.logoutButton} onClick={() => setIslogged(false)}>
-        <PowerSettingsNewIcon sx={{ color: "#FFFFFF" }} />
-      </IconButton>
+      <Stack direction="row" spacing={1}>
+        {TabsIndex === "ProfileTab" ? (
+          <IconButton
+            sx={classes.logoutButton}
+            onClick={() => setTabsIndex("Maintab")}
+          >
+            <Logo sx={{ color: "#FFFFFF", fontSize: "1.5rem" }} />
+          </IconButton>
+        ) : (
+          <></>
+        )}
+
+        <IconButton
+          sx={classes.logoutButton}
+          onClick={() => setIslogged(false)}
+        >
+          <PowerSettingsNewIcon sx={{ color: "#FFFFFF" }} />
+        </IconButton>
+      </Stack>
     </Toolbar>
   );
 };
@@ -127,9 +175,10 @@ const classes = {
     color: "#000000 !important",
     fontFamily: "Nova",
     paddingBottom: 0,
+    textTransform:"capitalize"
   },
   tablist: {
-      marginLeft:".5rem",
+    marginLeft: ".5rem",
     "& .MuiTabs-indicator": {
       height: "4px",
       borderRadius: "12em",
