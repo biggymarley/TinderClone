@@ -10,10 +10,15 @@ import {
   Typography
 } from "@mui/material";
 import { FormikContext, FormikProvider, useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Logo } from "../../Home/ContentFactory/IconFactory";
 import PassionsDialog, { ChipFactory } from "./PassionsDialog";
 export default function CreationStepper() {
+  useEffect(() => {
+   window.onbeforeunload = () => {
+    return window.confirm("Confirm refresh");
+   }
+  }, [])
   return (
     <>
       <SimpleHeader />
@@ -108,12 +113,12 @@ const UploadImages = () => {
   return (
     <Box sx={classes.UploadRoot}>
       <Typography sx={classes.desc} paragraph>
-        Click on your Uploaded picture to choose you Profile image
+        Upload a minimum of 1 picture and choose you profile image
       </Typography>
       <Grid
         container
         spacing={5}
-        justifyContent={{ xs: "center", md: "space-between" }}
+        justifyContent={{ xs: "center", sm: "space-evenly" }}
         alignItems="center"
       >
         {["pic1", "pic2", "pic3", "pic4", "pic5"].map((elem, index) => (
@@ -339,6 +344,7 @@ const classes = {
     borderRadius: "10px",
     p: ".5rem",
     paddingBottom: "calc(.5rem + 8px)",
+    paddingRight: "calc(.5rem + 8px)",
   },
   continueRoot: {
     display: "grid",
@@ -400,7 +406,7 @@ const classes = {
     cursor: "pointer",
     "&:hover": {
       color: "secondary.light",
-      backgroundColor: "#e0e0e0",
+      boxShadow: "0 0 5pt 1pt #e0e0e0",
     },
   },
   desc: {
@@ -434,7 +440,7 @@ const classes = {
     textTransform: "uppercase",
     textAlign: "center",
     width: "100%",
-    paddingBottom: { xs: "4rem", sm: "5rem" },
+    paddingBottom: { xs: "2rem", sm: "5rem" },
   },
   label: {
     fontFamily: "Roboto",

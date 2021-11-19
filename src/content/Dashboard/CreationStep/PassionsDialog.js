@@ -1,21 +1,15 @@
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
-import {
-    Container,
-    Dialog,
-    Grid,
-    IconButton,
-    Typography
-} from "@mui/material";
+import { Container, Dialog, Grid, IconButton, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { FormikContext } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { hoobies } from "../../../assets/hoobies";
 export default function PassionsDialog({ CloseDialog, open }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const formik = React.useContext(FormikContext);
-
+  const [error, setError] = useState(false);
   const HandlHoobies = (e) => {
     if (formik?.values) {
       if (
@@ -33,17 +27,26 @@ export default function PassionsDialog({ CloseDialog, open }) {
             (hoobie) => hoobie !== e.target.getAttribute("name")
           )
         );
+      if (formik.values.hoobies.length >= 2) setError(false);
+    }
+  };
+
+  const CheckBeforeClose = () => {
+    if (formik.values.hoobies.length < 3) setError(true);
+    else {
+      setError(false);
+      CloseDialog();
     }
   };
 
   return (
     <Dialog
-      onClose={CloseDialog}
+      onClose={CheckBeforeClose}
       open={open}
       fullScreen={matches ? false : true}
       sx={classes.root}
     >
-      <IconButton sx={classes.close} onClick={CloseDialog}>
+      <IconButton sx={classes.close} onClick={CheckBeforeClose}>
         <HighlightOffRoundedIcon sx={classes.closeIcon} />
       </IconButton>
       <Container maxWidth="md">
@@ -51,6 +54,13 @@ export default function PassionsDialog({ CloseDialog, open }) {
           Select passions that you’d like to share with the people you connect
           with. Choose a minimum of 3 and maximum of 5.
         </Typography>
+        {error ? (
+          <Typography sx={classes.error} color="error">
+            Choose a minimum of 3.
+          </Typography>
+        ) : (
+          false
+        )}
         <Grid
           container
           spacing={1}
@@ -74,10 +84,8 @@ export const ChipFactory = ({ hoobies, formik, HandlHoobies }) => {
       <Typography
         sx={classes.hoobie}
         name={hoobie}
-        style={
-          formik.values.hoobies.includes(hoobie) ? classes.choosen : {}
-        }
-        onClick={HandlHoobies ? HandlHoobies : ()=>{}}
+        style={formik.values.hoobies.includes(hoobie) ? classes.choosen : {}}
+        onClick={HandlHoobies ? HandlHoobies : () => {}}
       >
         {hoobie}
       </Typography>
@@ -118,6 +126,13 @@ const classes = {
     mt: "4rem",
     paddingBottom: "2rem",
     opacity: 0.5,
+  },
+  error: {
+    fontFamily: "Roboto",
+    fontSize: ".9rem",
+    fontWeight: 300,
+    textAlign: "center",
+    paddingBottom: "2rem",
   },
   hoobie: {
     fontFamily: "Roboto",
