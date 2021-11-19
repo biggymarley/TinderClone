@@ -167,10 +167,10 @@ const classes = {
     background: "#f0f2f4 !important",
   },
   textField: {
-    borderRadius: "2em",
+    borderRadius: "15px",
     paddingBottom:  { xs: "1rem", sm: "0" },
     "& input": {
-      borderRadius: "2em !important",
+      borderRadius: "15px !important",
     },
     "& label.Mui-focused": {
       color: "#505965",
@@ -184,7 +184,7 @@ const classes = {
       },
     },
     "& fieldset": {
-      borderRadius: "2em",
+      borderRadius: "15px",
     },
   },
   paswd: {

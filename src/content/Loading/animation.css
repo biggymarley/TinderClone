@@ -1,16 +1,28 @@
-@keyframes fade {
-    from {
-      font-size: 5rem;
-    }
-    to {
-      font-size: 6rem;
-    }
+
+@-webkit-keyframes beat {
+  0% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
   }
-  .fadeUp {
-    animation: linear .5s infinite alternate fade;
+  100% {
+      -webkit-transform: scale(1.5);
+      transform: scale(1.5);
   }
+}
+
+@keyframes beat {
+  0% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+  }
+  100% {
+      -webkit-transform: scale(1.2);
+      transform: scale(1.2);
+  }
+}
 
 
-
-
-  
+.fadeUp {
+  animation: beat linear .3s alternate  infinite;
+  -webkit-animation: beat linear .3s alternate infinite;
+}

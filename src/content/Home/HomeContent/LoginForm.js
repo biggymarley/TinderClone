@@ -106,9 +106,9 @@ const classes = {
     background: "#f0f2f4 !important",
   },
   textField: {
-    borderRadius: "2em",
+    borderRadius: "15px",
     "& input": {
-      borderRadius: "2em !important",
+      borderRadius: "15px !important",
     },
 
     "& label.Mui-focused": {
@@ -123,7 +123,7 @@ const classes = {
       },
     },
     "& fieldset": {
-      borderRadius: "2em",
+      borderRadius: "15px",
     },
   },
   paswd: {

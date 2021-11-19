@@ -108,3 +108,9 @@ body::-webkit-scrollbar-thumb {
   opacity: 1;
   cursor: pointer;
 }
+
+
+
+.safariBg{
+  background-image: url(./assets/imgs/homebg.jpg) !important;
+}
