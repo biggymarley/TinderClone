@@ -7,6 +7,10 @@
 
 body {
   margin: 0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 code {
@@ -63,12 +67,13 @@ body::-webkit-scrollbar-thumb {
   font-size: 1rem;
   font-family: "Roboto";
   border-radius: 10px;
-  padding: 0 min(5vw, 1.5rem);
+  min-width: 8rem;
   min-height: 45px;
   color: #505965;
   display: grid;
   place-items: center;
   cursor: pointer;
+ 
 }
 .VisibleChebox > label {
   cursor: pointer;

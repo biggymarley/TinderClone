@@ -1,18 +1,18 @@
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   Grid,
   Stack,
   TextField,
+  Typography
 } from "@mui/material";
-import React from "react";
-import { Logo } from "../Home/ContentFactory/IconFactory";
-import { Typography } from "@mui/material";
-import { FormikProvider, useFormik, FormikContext } from "formik";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-
+import { FormikContext, FormikProvider, useFormik } from "formik";
+import React, { useState } from "react";
+import { Logo } from "../../Home/ContentFactory/IconFactory";
+import PassionsDialog, { ChipFactory } from "./PassionsDialog";
 export default function CreationStepper() {
   return (
     <>
@@ -45,10 +45,10 @@ const Stepper = () => {
       pic4: null,
       pic5: null,
       profilePic: "",
+      hoobies: [],
     },
 
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       console.log(values);
     },
   });
@@ -73,9 +73,19 @@ const Stepper = () => {
               <UploadImages />
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="secondary">
-                submit
-              </Button>
+              <Hobbies />
+            </Grid>
+            <Grid item xs={12}>
+              <div style={classes.continueRoot}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  sx={classes.continueButton}
+                >
+                  Continue
+                </Button>
+              </div>
             </Grid>
           </Grid>
         </form>
@@ -166,7 +176,7 @@ const ChooseBox = ({ elem }) => {
 const Biografy = () => {
   const formik = React.useContext(FormikContext);
   return (
-    <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
+    <Stack direction="column" spacing={3} sx={{ width: "100%" }}>
       <Typography sx={classes.label}>Biografy</Typography>
       <TextField
         sx={classes.TextField}
@@ -260,26 +270,41 @@ const SexualPreferences = () => {
             <label htmlFor="Bi-sexual">Bisexual</label>
           </Box>
         </div>
-        {/* <div>
-          <input
-            type="radio"
-            id="Homosexual"
-            className="hiddenChebox"
-            value={"Homosexual"}
-            name="SexualPreferences"
-            onChange={formik.handleChange}
-            checked={
-              formik?.values?.SexualPreferences === "Homosexual"
-                ? true
-                : false
-            }
-          />
-          <Box className="VisibleChebox">
-            <label htmlFor="Homosexual">Homosexual</label>
-          </Box>
-        </div> */}
       </Stack>
     </Stack>
+  );
+};
+
+const Hobbies = () => {
+  const [openDialog, setopenDialog] = useState(false);
+  const formik = React.useContext(FormikContext);
+
+  const ToggleDialog = () => {
+    setopenDialog(!openDialog);
+  };
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Stack direction="column" spacing={3}>
+        <Typography sx={classes.label}>Passions</Typography>
+        <Grid container spacing={1} sx={classes.PassionsRoot}>
+          {formik.values.hoobies.length > 0 && (
+            <ChipFactory
+              hoobies={formik.values.hoobies}
+              formik={formik}
+              HandlHoobies={false}
+            />
+          )}
+        </Grid>
+        <Button
+          startIcon={<AddRoundedIcon />}
+          sx={classes.AddPassionButton}
+          onClick={ToggleDialog}
+        >
+          Add Passions
+        </Button>
+      </Stack>
+      <PassionsDialog CloseDialog={ToggleDialog} open={openDialog} />
+    </Box>
   );
 };
 
@@ -288,11 +313,44 @@ const classes = {
     p: { xs: ".5rem", sm: "1rem" },
     borderBottom: "1px solid #0000001a",
   },
+  AddPassionButton: {
+    border: "2px solid #505965",
+    fontFamily: '"Roboto"',
+    borderRadius: "10px",
+    maxWidth: { xs: "100%", sm: "12rem" },
+    minHeight: "45px",
+    color: "#505965",
+    cursor: "pointer",
+    "&:hover": {
+      color: "secondary.main",
+      borderColor: "secondary.main",
+      backgroundColor: "transparent",
+    },
+  },
   UploadRoot: {
     width: "calc(100%)",
     backgroundColor: "#f0f2f430",
     borderRadius: "10px",
     p: ".5rem",
+  },
+  PassionsRoot: {
+    width: "fit-content",
+    backgroundColor: "#f0f2f430",
+    borderRadius: "10px",
+    p: ".5rem",
+    paddingBottom: "calc(.5rem + 8px)",
+  },
+  continueRoot: {
+    display: "grid",
+    placeItems: "center",
+    width: "100%",
+    paddingBottom: "1rem",
+  },
+  continueButton: {
+    width: "10rem",
+    minHeight: "2.5rem",
+    borderRadius: "12em",
+    background: "linear-gradient(225deg,#ff6036,#fd267a)",
   },
   ImgBox: {
     minHeight: "12rem",
@@ -302,10 +360,10 @@ const classes = {
     position: "relative",
     display: "flex",
     placeItems: "center",
-    transition:"box-shadow .2s ease"
+    transition: "box-shadow .2s ease",
   },
   Choosen: {
-    boxShadow:"0 0 0pt 2pt #fe3f61",
+    boxShadow: "0 0 0pt 2pt #fe3f61",
   },
   ChooseBox: {
     position: "absolute",
@@ -374,7 +432,7 @@ const classes = {
     fontStyle: "italic",
     fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
     textTransform: "uppercase",
-    textAlign: { xs: "center", md: "start" },
+    textAlign: "center",
     width: "100%",
     paddingBottom: { xs: "4rem", sm: "5rem" },
   },
