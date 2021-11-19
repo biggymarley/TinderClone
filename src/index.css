@@ -4,6 +4,13 @@
     url("./assets/fonts/GothamRounded-Medium.otf") format("opentype");
   font-display: swap;
 }
+@font-face {
+  font-family: "Nova";
+  src: local("FontsFree-Net-Proxima-Nova-Sbold"),
+    url("./assets/fonts/FontsFree-Net-Proxima-Nova-Sbold.otf") format("opentype");
+  font-display: swap;
+}
+
 
 body {
   margin: 0;
