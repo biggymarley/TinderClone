@@ -1,18 +1,24 @@
 import { Box, IconButton, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 export default function HomeArea() {
+  const [pics, setpics] = useState(1);
+
+  const inctement = () => {
+    if (pics >= 99) setpics(1);
+    else setpics(pics + 1);
+  };
   return (
     <Box sx={classes.root}>
       <Box sx={classes.AvailableUserBox}>
         <Box sx={classes.AvailableUserImages}>
           <img
-            src="https://picsum.photos/200/300"
+            src={`https://randomuser.me/api/portraits/women/${pics}.jpg`}
             alt="user-gallery"
             style={classes.UserImage}
           />
-          <ButtonsStack />
+          <ButtonsStack inctement={inctement} />
           <Box sx={classes.BottomShadow}></Box>
         </Box>
       </Box>
@@ -20,17 +26,17 @@ export default function HomeArea() {
   );
 }
 
-const ButtonsStack = () => {
+const ButtonsStack = ({ inctement }) => {
   return (
     <Stack
       direction="row"
       sx={classes.ButtonStack}
       justifyContent="space-evenly"
     >
-      <IconButton sx={classes.crossButton}>
+      <IconButton sx={classes.crossButton} onClick={inctement}>
         <ClearRoundedIcon sx={classes.cross} />
       </IconButton>
-      <IconButton sx={classes.hearthButton}>
+      <IconButton sx={classes.hearthButton} onClick={inctement}>
         <FavoriteRoundedIcon sx={classes.hearth} />
       </IconButton>
     </Stack>
