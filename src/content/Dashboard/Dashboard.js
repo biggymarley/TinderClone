@@ -28,7 +28,7 @@ export default function Dashboard() {
   const [TabsIndex, setTabsIndex] = useState("MainTab");
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", overflow: "hidden" }}>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -54,6 +54,10 @@ export default function Dashboard() {
     </Box>
   );
 }
+
+
+
+
 
 
 
