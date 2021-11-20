@@ -29,7 +29,7 @@ export default App;
 
 const Getdashboard = async () => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(import("./content/Dashboard/Dashboard.js")), 0);
+    setTimeout(() => resolve(import("./content/Dashboard/Dashboard.js")), 2000);
   });
 };
 
@@ -37,7 +37,7 @@ const GetHomeRoot = async () => {
   return new Promise((resolve) => {
     setTimeout(
       () => resolve(import("./content/Home/HomeContent/HomeRoot")),
-      0
+      2000
 
     );
   });

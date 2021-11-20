@@ -8,21 +8,24 @@ import {
   IconButton,
   Slide,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Tab from "@mui/material/Tab";
 import Toolbar from "@mui/material/Toolbar";
 import React, { useContext, useState } from "react";
-import { Logo } from "../Home/ContentFactory/IconFactory";
 import { LogginContext } from "../../App";
+import { Logo } from "../Home/ContentFactory/IconFactory";
+import HomeArea from './MainArea/HomeArea';
+import ProfileArea from './MainArea/ProfileArea';
 import Matches from './matches/Matches';
 import Messages from './messages/Messages';
+
 const drawerWidth = 375;
 
 export default function Dashboard() {
-  const [TabsIndex, setTabsIndex] = useState("Maintab");
+  const [TabsIndex, setTabsIndex] = useState("MainTab");
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -40,23 +43,49 @@ export default function Dashboard() {
         anchor="left"
       >
         <DraweHeader TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
-        <MainTab value={TabsIndex} />
+        <HeaderTab value={TabsIndex} />
       </Drawer>
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: "#f0f2f4", minHeight: "100vh" }}
       >
-        {/* <CreationStepper /> */}
+        <MainTab TabsIndex={TabsIndex}/>
       </Box>
     </Box>
   );
 }
 
-function MainTab({ value }) {
+
+
+const MainTab = ({TabsIndex}) => {
+  return (
+    <TabContext value={TabsIndex} textColor="secondary" indicatorColor="secondary">
+    <Slide direction="right" in={TabsIndex === "MainTab"}>
+      <TabPanel value="MainTab" sx={{ padding: "0 !important" }}>
+        <HomeArea TabsIndex={TabsIndex}/>
+      </TabPanel>
+    </Slide>
+    <Slide direction="left" in={TabsIndex === "ProfileTab"}>
+      <TabPanel value="ProfileTab" sx={{ padding: "0 !important" }}>
+        <ProfileArea TabsIndex={TabsIndex}/>
+      </TabPanel>
+    </Slide>
+  </TabContext>
+  )
+}
+
+
+
+
+
+
+
+
+function HeaderTab({ value }) {
   return (
     <TabContext value={value} textColor="secondary" indicatorColor="secondary">
-      <Slide direction="right" in={value === "Maintab"}>
-        <TabPanel value="Maintab" sx={{ padding: "0 !important" }}>
+      <Slide direction="right" in={value === "MainTab"}>
+        <TabPanel value="MainTab" sx={{ padding: "0 !important" }}>
           <HomeTab />
         </TabPanel>
       </Slide>
@@ -133,7 +162,7 @@ const DraweHeader = ({ TabsIndex, setTabsIndex }) => {
         {TabsIndex === "ProfileTab" ? (
           <IconButton
             sx={classes.logoutButton}
-            onClick={() => setTabsIndex("Maintab")}
+            onClick={() => setTabsIndex("MainTab")}
           >
             <Logo sx={{ color: "#FFFFFF", fontSize: "1.5rem" }} />
           </IconButton>
