@@ -17,6 +17,8 @@ import Toolbar from "@mui/material/Toolbar";
 import React, { useContext, useState } from "react";
 import { Logo } from "../Home/ContentFactory/IconFactory";
 import { LogginContext } from "../../App";
+import Matches from './matches/Matches';
+import Messages from './messages/Messages';
 const drawerWidth = 375;
 
 export default function Dashboard() {
@@ -93,10 +95,10 @@ const HomeTab = () => {
           </TabList>
         </Box>
         <Slide direction="right" in={value === "1"}>
-          <TabPanel value="1">Matches</TabPanel>
+          <TabPanel value="1"><Matches/></TabPanel>
         </Slide>
         <Slide direction="left" in={value === "2"}>
-          <TabPanel value="2">Messages</TabPanel>
+          <TabPanel value="2"><Messages/></TabPanel>
         </Slide>
       </TabContext>
     </Box>

@@ -3,7 +3,7 @@ import Loading from "./content/Loading/Loading";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 export const LogginContext = React.createContext(false);
 function App() {
-  const [Islogged, setIslogged] = useState(false);
+  const [Islogged, setIslogged] = useState(true);
   const Dashboard = React.lazy(() => Getdashboard());
   const HomeRoot = React.lazy(() => GetHomeRoot());
 
@@ -29,7 +29,7 @@ export default App;
 
 const Getdashboard = async () => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(import("./content/Dashboard/Dashboard.js")), 9000);
+    setTimeout(() => resolve(import("./content/Dashboard/Dashboard.js")), 0);
   });
 };
 
@@ -37,7 +37,7 @@ const GetHomeRoot = async () => {
   return new Promise((resolve) => {
     setTimeout(
       () => resolve(import("./content/Home/HomeContent/HomeRoot")),
-      9000
+      0
 
     );
   });

@@ -25,6 +25,39 @@ export const Logo = (props) => {
     </SvgIcon>
   );
 };
+export const MessageIconRight = (props) => {
+  return (
+    <SvgIcon {...props} viewBox="0 0 79 72">
+      <linearGradient id="primary-gradient" x2="1" y2="1">
+        <stop offset="0%" stopColor="#ff6036" />
+        <stop offset="100%" stopColor="#fd267a" />
+      </linearGradient>
+      <path
+        d="M137.5 72C115.685 72 98 86.459 98 104.292c0 17.835 17.685 32.291 39.5 32.291h.918c.013 0 .028-.024.041-.03.59-.014 1.183-.021 1.765-.056l4.573 2.334h.003l9.098 4.645c2.516 1.284 4.575.126 4.575-2.574v-9.251C169.6 125.94 177 115.825 177 104.29 177 86.46 159.315 72 137.5 72"
+        transform="translate(-98 -72)"
+        fill="url(#primary-gradient)"
+        fillRule="evenodd"
+      ></path>
+    </SvgIcon>
+  );
+};
+
+export const MessageIconLeft = (props) => {
+  return (
+    <SvgIcon {...props} viewBox="0 0 79 72">
+      <linearGradient id="gray-gradient" x2="1" y2="1">
+        <stop offset="0%" stopColor="#ffffff" />
+        <stop offset="100%" stopColor="#d7e1ec" />
+      </linearGradient>
+      <path
+        d="M137.5 72C115.685 72 98 86.459 98 104.292c0 17.835 17.685 32.291 39.5 32.291h.918c.013 0 .028-.024.041-.03.59-.014 1.183-.021 1.765-.056l4.573 2.334h.003l9.098 4.645c2.516 1.284 4.575.126 4.575-2.574v-9.251C169.6 125.94 177 115.825 177 104.29 177 86.46 159.315 72 137.5 72"
+        transform="translate(-98 -72)"
+        fill="url(#gray-gradient)"
+        fillRule="evenodd"
+      ></path>
+    </SvgIcon>
+  );
+};
 
 export const Google = (props) => {
   return (

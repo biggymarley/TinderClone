@@ -114,3 +114,9 @@ body::-webkit-scrollbar-thumb {
 .safariBg{
   background-image: url(./assets/imgs/homebg.jpg) !important;
 }
+
+#svg-fill-linear__primary{
+  --color-stop-1: #a770ef;
+  --color-stop-2: #cf8bf3;
+  --color-stop-3: #fdb99b;
+}
