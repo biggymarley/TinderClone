@@ -25,6 +25,38 @@ export const Logo = (props) => {
     </SvgIcon>
   );
 };
+export const MessageIcon = (props) => {
+  return (
+    <SvgIcon {...props} viewBox="0 0 24 24">
+      <path d="M11.612 16.143c0-2.821 2.627-5.213 5.97-5.213.776 0 1.552.184 2.269.43 0-4.048-4-7.36-8.836-7.36C6.06 4 2 7.434 2 11.543c0 2.637 1.672 5.09 4.18 6.317v2.76c0 .307.238.49.596.307l3.582-1.84h.896c.418 0 .836 0 1.194-.123-.597-.859-.836-1.84-.836-2.821zm5.97-3.68c-2.507 0-4.537 1.595-4.537 3.68s2.03 3.802 4.477 3.802h.299l.597.246.955.613c.299 0 .597 0 .597-.368v-1.104c1.194-.613 2.03-1.84 2.03-3.189 0-2.085-1.97-3.68-4.478-3.68h.06z"></path>
+    </SvgIcon>
+  );
+};
+export const MatchesIcon = (props) => {
+  return (
+    <SvgIcon {...props} viewBox="0 0 24 24">
+      <path
+        d="M11.999 2C11.999 7.001 17 12 22 12c-5.001 0-10 5.382-10 10 0-4.618-5.027-10-10-10 4.974 0 9.999-4.999 9.999-10z"
+        fill=""
+      ></path>
+    </SvgIcon>
+  );
+};
+
+<svg
+  class="Sq(32px) C($c-bluegray) Trsdu($fast)"
+  viewBox="0 0 24 24"
+  width="24px"
+  height="24px"
+  focusable="false"
+  aria-hidden="true"
+  role="presentation"
+>
+  <path
+    d="M11.999 2C11.999 7.001 17 12 22 12c-5.001 0-10 5.382-10 10 0-4.618-5.027-10-10-10 4.974 0 9.999-4.999 9.999-10z"
+    fill=""
+  ></path>
+</svg>;
 export const MessageIconRight = (props) => {
   return (
     <SvgIcon {...props} viewBox="0 0 79 72">

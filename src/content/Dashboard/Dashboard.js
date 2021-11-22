@@ -3,12 +3,13 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import {
+  AppBar,
   Avatar,
   Button,
   IconButton,
   Slide,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -16,74 +17,136 @@ import Tab from "@mui/material/Tab";
 import Toolbar from "@mui/material/Toolbar";
 import React, { useContext, useState } from "react";
 import { LogginContext } from "../../App";
-import { Logo } from "../Home/ContentFactory/IconFactory";
-import HomeArea from './MainArea/HomeArea';
-import ProfileArea from './MainArea/ProfileArea';
-import Matches from './matches/Matches';
-import Messages from './messages/Messages';
-
-const drawerWidth = 375;
+import {
+  Logo,
+  MessageIcon,
+  MatchesIcon,
+} from "../Home/ContentFactory/IconFactory";
+import HomeArea from "./MainArea/HomeArea";
+import ProfileArea from "./MainArea/ProfileArea";
+import Matches from "./matches/Matches";
+import Messages from "./messages/Messages";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Dashboard() {
+  const drawerWidth = 375;
   const [TabsIndex, setTabsIndex] = useState("MainTab");
-
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
   return (
     <Box sx={{ display: "flex", overflow: "hidden" }}>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+      {matches ? (
+        <Drawer
+          sx={{
             width: drawerWidth,
-            overflow: "hidden",
-            boxSizing: "border-box",
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <DraweHeader TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
-        <HeaderTab value={TabsIndex} />
-      </Drawer>
+            display: { xs: "none", md: "block" },
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              overflow: "hidden",
+              boxSizing: "border-box",
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          <DraweHeader TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
+          <HeaderTab value={TabsIndex} />
+        </Drawer>
+      ) : (
+        <MobileRander TabsIndex={TabsIndex} setTabsIndex={setTabsIndex}/>
+      )}
+
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: "#f0f2f4", minHeight: "100vh" }}
+        sx={{ flexGrow: 1, bgcolor: "#f0f2f4", my: { xs: "50px", md: "0" } }}
       >
-        <MainTab TabsIndex={TabsIndex}/>
+        <MainTab TabsIndex={TabsIndex} />
       </Box>
     </Box>
   );
 }
 
-
-
-
-
-
-
-const MainTab = ({TabsIndex}) => {
+const MobileRander = ({ setTabsIndex }) => {
   return (
-    <TabContext value={TabsIndex} textColor="secondary" indicatorColor="secondary">
-    <Slide direction="right" in={TabsIndex === "MainTab"}>
-      <TabPanel value="MainTab" sx={{ padding: "0 !important" }}>
-        <HomeArea TabsIndex={TabsIndex}/>
-      </TabPanel>
-    </Slide>
-    <Slide direction="left" in={TabsIndex === "ProfileTab"}>
-      <TabPanel value="ProfileTab" sx={{ padding: "0 !important" }}>
-        <ProfileArea TabsIndex={TabsIndex}/>
-      </TabPanel>
-    </Slide>
-  </TabContext>
-  )
-}
+    <>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{ top: 0, bottom: "auto", backgroundColor: "#FFFFFF" }}
+      >
+        <Toolbar variant="dense">
+          <Box>
+            <IconButton
+              onClick={() => setTabsIndex("ProfileTab")}
+              sx={classes.UserButton}
+              style={{ width: 35, height: 35 }}
+            >
+              <Avatar
+                alt="profile-pic"
+                src="https://picsum.photos/200/300"
+                sx={{ width: 35, height: 35 }}
+              />
+            </IconButton>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Logo sx={classes.Logo} />
+            <Typography sx={classes.LogoName}>matcha</Typography>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{ top: "auto", bottom: 0, backgroundColor: "#FFFFFF" }}
+      >
+        <Toolbar
+          variant="dense"
+          sx={{ display: "flex", justifyContent: "space-around" }}
+        >
+          <IconButton onClick={() => setTabsIndex("MainTab")}>
+            <Logo sx={{ color: "#00000020", fontSize: "2rem" }} />
+          </IconButton>
+          <IconButton onClick={() => setTabsIndex("MainTab")}>
+            <MatchesIcon sx={{ color: "#00000020", fontSize: "2rem" }} />
+          </IconButton>
+          <IconButton onClick={() => setTabsIndex("MainTab")}>
+            <MessageIcon sx={{ color: "#00000020", fontSize: "2rem" }} />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </>
+  );
+};
 
-
-
-
-
-
-
+const MainTab = ({ TabsIndex }) => {
+  return (
+    <TabContext
+      value={TabsIndex}
+      textColor="secondary"
+      indicatorColor="secondary"
+    >
+      <Slide direction="right" in={TabsIndex === "MainTab"}>
+        <TabPanel value="MainTab" sx={{ padding: "0 !important" }}>
+          <HomeArea TabsIndex={TabsIndex} />
+        </TabPanel>
+      </Slide>
+      <Slide direction="left" in={TabsIndex === "ProfileTab"}>
+        <TabPanel value="ProfileTab" sx={{ padding: "0 !important" }}>
+          <ProfileArea TabsIndex={TabsIndex} />
+        </TabPanel>
+      </Slide>
+    </TabContext>
+  );
+};
 
 function HeaderTab({ value }) {
   return (
@@ -128,10 +191,14 @@ const HomeTab = () => {
           </TabList>
         </Box>
         <Slide direction="right" in={value === "1"}>
-          <TabPanel value="1"><Matches/></TabPanel>
+          <TabPanel value="1">
+            <Matches />
+          </TabPanel>
         </Slide>
         <Slide direction="left" in={value === "2"}>
-          <TabPanel value="2"><Messages/></TabPanel>
+          <TabPanel value="2">
+            <Messages />
+          </TabPanel>
         </Slide>
       </TabContext>
     </Box>
@@ -210,7 +277,7 @@ const classes = {
     color: "#000000 !important",
     fontFamily: "Nova",
     paddingBottom: 0,
-    textTransform:"capitalize"
+    textTransform: "capitalize",
   },
   tablist: {
     marginLeft: ".5rem",
@@ -218,5 +285,16 @@ const classes = {
       height: "4px",
       borderRadius: "12em",
     },
+  },
+  Logo: {
+    width: { xs: "30px", md: "39.936px" },
+    height: { xs: "40px", md: "52.97355px" },
+    color: "secondary.main",
+  },
+  LogoName: {
+    fontFamily: "Gotham",
+    fontSize: { xs: "1.5rem", md: "2.4rem" },
+    letterSpacing: "-1px",
+    color: "secondary.main",
   },
 };

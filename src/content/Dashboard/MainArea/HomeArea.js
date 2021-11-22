@@ -22,7 +22,7 @@ export default function HomeArea() {
   useEffect(() => {
     setTimeout(() => {
       setsearching(true);
-    }, 0);
+    },5000);
   }, []);
   const inctement = () => {
     if (pics >= 99) setpics(1);
@@ -218,8 +218,8 @@ const ButtonsStack = ({ inctement, contained }) => {
 
 const classes = {
   root: {
-    minHeight: "100vh",
-    display: "grid",
+    height: {xs:"calc(100vh - 100px)", md:"100vh"},
+    display: {xs:"block", md:"grid"},
     placeItems: "center",
   },
   DownButton: {
@@ -241,16 +241,16 @@ const classes = {
   },
   AvailableUserBox: {
     position: "relative",
-    width: "370px",
-    height: "640px",
+    width:  {xs:"100%", md:"370px"},
+    height:{xs:"100%", md:"640px"},
     borderRadius: "10px",
     boxShadow:
       "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
   },
   NoMatchingRoot: {
     position: "relative",
-    width: "15rem",
-    height: "15rem",
+    width: "100%",
+    height: "100%",
     display: "grid",
     placeItems: "center",
   },
