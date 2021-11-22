@@ -31,7 +31,7 @@ code {
 
 ::-webkit-scrollbar {
   width: 5px;
-  /* display: none; */
+  display: none;
 }
 ::-webkit-scrollbar-track {
   margin: 5px 0;
@@ -55,6 +55,10 @@ body::-webkit-scrollbar-thumb {
   background: linear-gradient(225deg, #ff6036, #fd267a) !important;
   border-radius: 12em !important;
 }
+
+
+
+
 
 @keyframes fadeInFromNone {
   0% {
@@ -115,8 +119,3 @@ body::-webkit-scrollbar-thumb {
   background-image: url(./assets/imgs/homebg.jpg) !important;
 }
 
-#svg-fill-linear__primary{
-  --color-stop-1: #a770ef;
-  --color-stop-2: #cf8bf3;
-  --color-stop-3: #fdb99b;
-}
