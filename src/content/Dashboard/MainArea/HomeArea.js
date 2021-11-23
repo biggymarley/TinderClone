@@ -273,6 +273,7 @@ const classes = {
     color: "#FFFFFF",
     bottom: "-15px",
     right: "20px",
+    zIndex:2
   },
   ProfileWraper: {
     width: { xs: "99%", md: "100%" },
