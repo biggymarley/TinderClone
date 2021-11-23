@@ -104,6 +104,7 @@ const DetailedUserInfos = ({ pics, ToggleOpen, inctement }) => {
         <IconButton sx={classes.DownButton} onClick={ToggleOpen}>
           <ArrowDownwardRoundedIcon />
         </IconButton>
+      <BrowseImgs />
       </Box>
       <InfoStack color={true} noStatus={true} />
       <Divider />
@@ -147,15 +148,19 @@ const PreviewProfile = ({ inctement, pics, ToggleOpen }) => {
 const BrowseImgs = () => {
   return (
     <Grid container sx={classes.BrowseImgs}>
-      <Grid item xs={6} sx={{ display: "flex" }}>
-        <IconButton sx={classes.navigationButton} disableRipple>
+      <Grid item xs={6} sx={classes.leftgrid} >
+        <IconButton sx={classes.navigationButton} style={{justifyContent:"flex-start"}}  disableRipple>
           <ChevronLeftRoundedIcon sx={{ color: "#FFFFFF", fontSize: "3rem" }} />
         </IconButton>
       </Grid>
-      <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <IconButton sx={classes.navigationButton} disableRipple>
+      <Grid item xs={6} sx={classes.rightgrid}>
+        <IconButton sx={classes.navigationButton} style={{justifyContent:"flex-end"}} disableRipple>
           <ChevronRightRoundedIcon
-            sx={{ color: "#FFFFFF", fontSize: "3rem", justifySelf:"flex-start" }}
+            sx={{
+              color: "#FFFFFF",
+              fontSize: "3rem",
+              justifySelf: "flex-start",
+            }}
           />
         </IconButton>
       </Grid>
@@ -280,8 +285,15 @@ const classes = {
     position: "absolute",
     top: 0,
   },
-  navigationButton: { color: "#FFFFFF", width: "100%", borderRadius: "0", background:"transparent !important"  },
-
+  navigationButton: {
+    color: "#FFFFFF",
+    width: "100%",
+    height:"100%",
+    borderRadius: "0",
+    background: "transparent !important",
+  },
+leftgrid:{ display: "flex" , opacity:"0" ,transition:"opacity .2s ease", "&:hover":{opacity:1}},
+rightgrid:{ display: "flex" , opacity:"0" ,transition:"opacity .2s ease", "&:hover":{opacity:1}},
   reportButton: {
     color: "#000000",
     opacity: 0.3,
