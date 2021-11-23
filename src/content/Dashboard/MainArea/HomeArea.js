@@ -16,14 +16,15 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ChipFactory } from "../CreationStep/PassionsDialog";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+export const BrowseusersContext = React.createContext(null);
 export default function HomeArea() {
   const [pics, setpics] = useState(0);
   const [searching, setsearching] = useState(false);
-
+  const [browseusers, setbrowseusers] = useState(0);
   useEffect(() => {
     setTimeout(() => {
       setsearching(true);
@@ -37,18 +38,27 @@ export default function HomeArea() {
     if (pics === 0) setpics(4);
     else setpics(pics - 1);
   };
+
+  const browsing = () => {
+    // if (browseusers >= availabeUsers.length) setbrowseusers(null);s
+    setbrowseusers(browseusers + 1);
+    setpics(0);
+  };
+
   return (
-    <Box sx={classes.root}>
-      {!searching ? (
-        <NoMatchingProfiles />
-      ) : (
-        <AvailableProfiles
-          increment={increment}
-          decrement={decrement}
-          pics={pics}
-        />
-      )}
-    </Box>
+    <BrowseusersContext.Provider value={{ browseusers, browsing }}>
+      <Box sx={classes.root}>
+        {!searching || browseusers >= availabeUsers.length ? (
+          <NoMatchingProfiles />
+        ) : (
+          <AvailableProfiles
+            increment={increment}
+            decrement={decrement}
+            pics={pics}
+          />
+        )}
+      </Box>
+    </BrowseusersContext.Provider>
   );
 }
 
@@ -94,7 +104,6 @@ const AvailableProfiles = ({ increment, pics, decrement }) => {
             ToggleOpen={ToggleOpen}
             increment={increment}
             decrement={decrement}
-
           />
         </div>
       </Fade>
@@ -103,12 +112,16 @@ const AvailableProfiles = ({ increment, pics, decrement }) => {
 };
 
 const DetailedUserInfos = ({ pics, ToggleOpen, increment, decrement }) => {
+  const { browseusers } = useContext(BrowseusersContext);
   return (
     <Box sx={classes.AvailableUserInfos} className="hidescrollbar">
       <Box sx={classes.imgwraper}>
-      <GalleryIndexSign length={Imgs.length} activeindex={pics} />
+        <GalleryIndexSign
+          length={availabeUsers[browseusers].Imgs.length}
+          activeindex={pics}
+        />
         <img
-          src={Imgs[pics]}
+          src={availabeUsers[browseusers].Imgs[pics]}
           alt="user-gallery"
           style={classes.UserDetailedImage}
         />
@@ -116,7 +129,7 @@ const DetailedUserInfos = ({ pics, ToggleOpen, increment, decrement }) => {
         <IconButton sx={classes.DownButton} onClick={ToggleOpen}>
           <ArrowDownwardRoundedIcon />
         </IconButton>
-        <BrowseImgs increment={increment} decrement={decrement}/>
+        <BrowseImgs increment={increment} decrement={decrement} />
       </Box>
       <InfoStack color={true} noStatus={true} />
       <Divider />
@@ -126,11 +139,17 @@ const DetailedUserInfos = ({ pics, ToggleOpen, increment, decrement }) => {
             Passions
           </Typography>
         </Grid>
-        <ChipFactory hoobies={hoobies} formik={false} HandlHoobies={false} />
+        <ChipFactory
+          hoobies={availabeUsers[browseusers].hoobies}
+          formik={false}
+          HandlHoobies={false}
+        />
       </Grid>
       <Divider />
       <Box display="grid" placeItems="center" minHeight="60px">
-        <Button sx={classes.reportButton}>Report Name</Button>
+        <Button sx={classes.reportButton}>
+          Report {availabeUsers[browseusers].name}
+        </Button>
       </Box>
       <Divider />
       <Box minHeight="30px" />
@@ -141,10 +160,18 @@ const DetailedUserInfos = ({ pics, ToggleOpen, increment, decrement }) => {
 
 const PreviewProfile = ({ increment, pics, ToggleOpen, decrement }) => {
   const Img = styled("img")({});
+  const { browseusers } = useContext(BrowseusersContext);
   return (
     <Box sx={classes.AvailableUserImages}>
-      <GalleryIndexSign length={Imgs.length} activeindex={pics} />
-      <Img src={Imgs[pics]} alt="user-gallery" sx={classes.UserImage} />
+      <GalleryIndexSign
+        length={availabeUsers[browseusers].Imgs.length}
+        activeindex={pics}
+      />
+      <Img
+        src={availabeUsers[browseusers].Imgs[pics]}
+        alt="user-gallery"
+        sx={classes.UserImage}
+      />
       <InfoStack ToggleOpen={ToggleOpen} />
       <ButtonsStack increment={increment} />
       <Box sx={classes.BottomShadow}></Box>
@@ -179,7 +206,7 @@ const GalleryIndexSign = ({ length, activeindex }) => {
   );
 };
 
-const BrowseImgs = ({increment, decrement}) => {
+const BrowseImgs = ({ increment, decrement }) => {
   return (
     <Grid container sx={classes.BrowseImgs}>
       <Grid item xs={6} sx={classes.leftgrid}>
@@ -214,6 +241,7 @@ const BrowseImgs = ({increment, decrement}) => {
 
 const InfoStack = ({ increment, ToggleOpen, color, noStatus }) => {
   const p = window.innerHeight > 470 ? "1rem" : "15%";
+  const { browseusers } = useContext(BrowseusersContext);
   return (
     <Stack
       direction="row"
@@ -232,14 +260,14 @@ const InfoStack = ({ increment, ToggleOpen, color, noStatus }) => {
                 sx={classes.userName}
                 style={color ? { color: "#000000" } : {}}
               >
-                Name
+                {availabeUsers[browseusers].name}
               </Typography>
               <Typography
                 variant="span"
                 sx={classes.age}
                 style={color ? { color: "#000000" } : {}}
               >
-                26
+                {availabeUsers[browseusers].age}
               </Typography>
             </Stack>
             {noStatus ? (
@@ -265,7 +293,7 @@ const InfoStack = ({ increment, ToggleOpen, color, noStatus }) => {
               sx={classes.mailes}
               style={color ? { color: "#000000", opacity: ".5" } : {}}
             >
-              121 Kilometres away
+              {availabeUsers[browseusers].position}
             </Typography>
           </Stack>
         </Stack>
@@ -282,6 +310,8 @@ const InfoStack = ({ increment, ToggleOpen, color, noStatus }) => {
 };
 
 const ButtonsStack = ({ increment, contained }) => {
+  const { browsing } = useContext(BrowseusersContext);
+
   return (
     <Stack
       direction="row"
@@ -291,13 +321,13 @@ const ButtonsStack = ({ increment, contained }) => {
     >
       <IconButton
         sx={contained ? classes.contained : classes.crossButton}
-        onClick={increment}
+        onClick={browsing}
       >
         <ClearRoundedIcon sx={classes.cross} />
       </IconButton>
       <IconButton
         sx={contained ? classes.contained : classes.hearthButton}
-        onClick={increment}
+        onClick={browsing}
       >
         <FavoriteRoundedIcon sx={classes.hearth} />
       </IconButton>
@@ -549,4 +579,83 @@ const Imgs = [
   "https://randomuser.me/api/portraits/women/2.jpg",
   "https://randomuser.me/api/portraits/women/3.jpg",
   "https://randomuser.me/api/portraits/women/4.jpg",
+];
+
+const availabeUsers = [
+  {
+    name: "user",
+    age: "25",
+    position: "10 Kilometres Away",
+    hoobies: [
+      "Emancipation",
+      "Engagement",
+      "Development",
+      "Nutrition",
+      "Europe",
+    ],
+    Imgs: [
+      "https://randomuser.me/api/portraits/women/6.jpg",
+      "https://randomuser.me/api/portraits/women/7.jpg",
+      "https://randomuser.me/api/portraits/women/8.jpg",
+      "https://randomuser.me/api/portraits/women/9.jpg",
+      "https://randomuser.me/api/portraits/women/10.jpg",
+    ],
+  },
+  {
+    name: "name",
+    age: "29",
+    position: "10 Kilometres Away",
+    hoobies: [
+      "Emancipation",
+      "Engagement",
+      "Development",
+      "Nutrition",
+      "Europe",
+    ],
+    Imgs: [
+      "https://randomuser.me/api/portraits/women/11.jpg",
+      "https://randomuser.me/api/portraits/women/12.jpg",
+      "https://randomuser.me/api/portraits/women/13.jpg",
+      "https://randomuser.me/api/portraits/women/14.jpg",
+      "https://randomuser.me/api/portraits/women/15.jpg",
+    ],
+  },
+  {
+    name: "match",
+    age: "25",
+    position: "10 Kilometres Away",
+    hoobies: [
+      "Emancipation",
+      "Engagement",
+      "Development",
+      "Nutrition",
+      "Europe",
+    ],
+    Imgs: [
+      "https://randomuser.me/api/portraits/women/16.jpg",
+      "https://randomuser.me/api/portraits/women/17.jpg",
+      "https://randomuser.me/api/portraits/women/18.jpg",
+      "https://randomuser.me/api/portraits/women/19.jpg",
+      "https://randomuser.me/api/portraits/women/20.jpg",
+    ],
+  },
+  {
+    name: "last",
+    age: "25",
+    position: "10 Kilometres Away",
+    hoobies: [
+      "Emancipation",
+      "Engagement",
+      "Development",
+      "Nutrition",
+      "Europe",
+    ],
+    Imgs: [
+      "https://randomuser.me/api/portraits/women/21.jpg",
+      "https://randomuser.me/api/portraits/women/22.jpg",
+      "https://randomuser.me/api/portraits/women/23.jpg",
+      "https://randomuser.me/api/portraits/women/24.jpg",
+      "https://randomuser.me/api/portraits/women/25.jpg",
+    ],
+  },
 ];
