@@ -21,7 +21,7 @@ import { ChipFactory } from "../CreationStep/PassionsDialog";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 export default function HomeArea() {
-  const [pics, setpics] = useState(1);
+  const [pics, setpics] = useState(0);
   const [searching, setsearching] = useState(false);
 
   useEffect(() => {
@@ -29,16 +29,24 @@ export default function HomeArea() {
       setsearching(true);
     }, 2000);
   }, []);
-  const inctement = () => {
-    if (pics >= 99) setpics(1);
+  const increment = () => {
+    if (pics >= 4) setpics(0);
     else setpics(pics + 1);
+  };
+  const decrement = () => {
+    if (pics === 0) setpics(4);
+    else setpics(pics - 1);
   };
   return (
     <Box sx={classes.root}>
       {!searching ? (
         <NoMatchingProfiles />
       ) : (
-        <AvailableProfiles inctement={inctement} pics={pics} />
+        <AvailableProfiles
+          increment={increment}
+          decrement={decrement}
+          pics={pics}
+        />
       )}
     </Box>
   );
@@ -59,7 +67,7 @@ const NoMatchingProfiles = () => {
   );
 };
 
-const AvailableProfiles = ({ inctement, pics }) => {
+const AvailableProfiles = ({ increment, pics, decrement }) => {
   const [openPinfo, setopenPinfo] = useState(false);
   const Div = styled("div")({});
   const ToggleOpen = () => {
@@ -72,8 +80,9 @@ const AvailableProfiles = ({ inctement, pics }) => {
       <Fade in={!openPinfo}>
         <Div sx={classes.ProfileWraper}>
           <PreviewProfile
-            inctement={inctement}
+            increment={increment}
             pics={pics}
+            decrement={decrement}
             ToggleOpen={ToggleOpen}
           />
         </Div>
@@ -83,7 +92,9 @@ const AvailableProfiles = ({ inctement, pics }) => {
           <DetailedUserInfos
             pics={pics}
             ToggleOpen={ToggleOpen}
-            inctement={inctement}
+            increment={increment}
+            decrement={decrement}
+
           />
         </div>
       </Fade>
@@ -91,12 +102,13 @@ const AvailableProfiles = ({ inctement, pics }) => {
   );
 };
 
-const DetailedUserInfos = ({ pics, ToggleOpen, inctement }) => {
+const DetailedUserInfos = ({ pics, ToggleOpen, increment, decrement }) => {
   return (
     <Box sx={classes.AvailableUserInfos} className="hidescrollbar">
       <Box sx={classes.imgwraper}>
+      <GalleryIndexSign length={Imgs.length} activeindex={pics} />
         <img
-          src={`https://randomuser.me/api/portraits/women/${pics}.jpg`}
+          src={Imgs[pics]}
           alt="user-gallery"
           style={classes.UserDetailedImage}
         />
@@ -104,7 +116,7 @@ const DetailedUserInfos = ({ pics, ToggleOpen, inctement }) => {
         <IconButton sx={classes.DownButton} onClick={ToggleOpen}>
           <ArrowDownwardRoundedIcon />
         </IconButton>
-      <BrowseImgs />
+        <BrowseImgs increment={increment} decrement={decrement}/>
       </Box>
       <InfoStack color={true} noStatus={true} />
       <Divider />
@@ -122,39 +134,71 @@ const DetailedUserInfos = ({ pics, ToggleOpen, inctement }) => {
       </Box>
       <Divider />
       <Box minHeight="30px" />
-      <ButtonsStack inctement={inctement} contained={true} />
+      <ButtonsStack increment={increment} contained={true} />
     </Box>
   );
 };
 
-const PreviewProfile = ({ inctement, pics, ToggleOpen }) => {
+const PreviewProfile = ({ increment, pics, ToggleOpen, decrement }) => {
   const Img = styled("img")({});
   return (
     <Box sx={classes.AvailableUserImages}>
-      <Img
-        src={`https://randomuser.me/api/portraits/women/${pics}.jpg`}
-        alt="user-gallery"
-        sx={classes.UserImage}
-      />
-
+      <GalleryIndexSign length={Imgs.length} activeindex={pics} />
+      <Img src={Imgs[pics]} alt="user-gallery" sx={classes.UserImage} />
       <InfoStack ToggleOpen={ToggleOpen} />
-      <ButtonsStack inctement={inctement} />
+      <ButtonsStack increment={increment} />
       <Box sx={classes.BottomShadow}></Box>
-      <BrowseImgs />
+      <BrowseImgs increment={increment} decrement={decrement} />
     </Box>
   );
 };
 
-const BrowseImgs = () => {
+const GalleryIndexSign = ({ length, activeindex }) => {
+  let grids = [];
+  for (let i = 0; i < length; i++) {
+    grids.push(
+      <Grid item sx={{ flexGrow: 1 }} key={i}>
+        <Box
+          sx={classes.IndexSign}
+          style={i <= activeindex ? { backgroundColor: "#FFFFFF" } : {}}
+        />
+      </Grid>
+    );
+  }
+
+  return (
+    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <Grid
+        container
+        sx={{ position: "absolute", width: "98%", mt: "2px" }}
+        spacing={1}
+      >
+        {grids.map((grid) => grid)}
+      </Grid>
+    </Box>
+  );
+};
+
+const BrowseImgs = ({increment, decrement}) => {
   return (
     <Grid container sx={classes.BrowseImgs}>
-      <Grid item xs={6} sx={classes.leftgrid} >
-        <IconButton sx={classes.navigationButton} style={{justifyContent:"flex-start"}}  disableRipple>
+      <Grid item xs={6} sx={classes.leftgrid}>
+        <IconButton
+          sx={classes.navigationButton}
+          style={{ justifyContent: "flex-start" }}
+          disableRipple
+          onClick={decrement}
+        >
           <ChevronLeftRoundedIcon sx={{ color: "#FFFFFF", fontSize: "3rem" }} />
         </IconButton>
       </Grid>
       <Grid item xs={6} sx={classes.rightgrid}>
-        <IconButton sx={classes.navigationButton} style={{justifyContent:"flex-end"}} disableRipple>
+        <IconButton
+          sx={classes.navigationButton}
+          style={{ justifyContent: "flex-end" }}
+          disableRipple
+          onClick={increment}
+        >
           <ChevronRightRoundedIcon
             sx={{
               color: "#FFFFFF",
@@ -168,7 +212,7 @@ const BrowseImgs = () => {
   );
 };
 
-const InfoStack = ({ inctement, ToggleOpen, color, noStatus }) => {
+const InfoStack = ({ increment, ToggleOpen, color, noStatus }) => {
   const p = window.innerHeight > 470 ? "1rem" : "15%";
   return (
     <Stack
@@ -237,7 +281,7 @@ const InfoStack = ({ inctement, ToggleOpen, color, noStatus }) => {
   );
 };
 
-const ButtonsStack = ({ inctement, contained }) => {
+const ButtonsStack = ({ increment, contained }) => {
   return (
     <Stack
       direction="row"
@@ -247,13 +291,13 @@ const ButtonsStack = ({ inctement, contained }) => {
     >
       <IconButton
         sx={contained ? classes.contained : classes.crossButton}
-        onClick={inctement}
+        onClick={increment}
       >
         <ClearRoundedIcon sx={classes.cross} />
       </IconButton>
       <IconButton
         sx={contained ? classes.contained : classes.hearthButton}
-        onClick={inctement}
+        onClick={increment}
       >
         <FavoriteRoundedIcon sx={classes.hearth} />
       </IconButton>
@@ -273,7 +317,7 @@ const classes = {
     color: "#FFFFFF",
     bottom: "-15px",
     right: "20px",
-    zIndex:2
+    zIndex: 2,
   },
   ProfileWraper: {
     width: { xs: "99%", md: "100%" },
@@ -289,12 +333,22 @@ const classes = {
   navigationButton: {
     color: "#FFFFFF",
     width: "100%",
-    height:"100%",
+    height: "100%",
     borderRadius: "0",
     background: "transparent !important",
   },
-leftgrid:{ display: "flex" , opacity:"0" ,transition:"opacity .2s ease", "&:hover":{opacity:1}},
-rightgrid:{ display: "flex" , opacity:"0" ,transition:"opacity .2s ease", "&:hover":{opacity:1}},
+  leftgrid: {
+    display: "flex",
+    opacity: "0",
+    transition: "opacity .2s ease",
+    "&:hover": { opacity: 1 },
+  },
+  rightgrid: {
+    display: "flex",
+    opacity: "0",
+    transition: "opacity .2s ease",
+    "&:hover": { opacity: 1 },
+  },
   reportButton: {
     color: "#000000",
     opacity: 0.3,
@@ -472,6 +526,13 @@ rightgrid:{ display: "flex" , opacity:"0" ,transition:"opacity .2s ease", "&:hov
     fontWeight: "500",
     fontFamily: "Roboto",
   },
+  IndexSign: {
+    height: "5px",
+    width: "100%",
+    borderRadius: "2.5px",
+    border: "1px solid #FFFFFF50",
+    backgroundColor: "#6F6F6F60",
+  },
 };
 
 const hoobies = [
@@ -480,4 +541,12 @@ const hoobies = [
   "Development",
   "Nutrition",
   "Europe",
+];
+
+const Imgs = [
+  "https://randomuser.me/api/portraits/women/0.jpg",
+  "https://randomuser.me/api/portraits/women/1.jpg",
+  "https://randomuser.me/api/portraits/women/2.jpg",
+  "https://randomuser.me/api/portraits/women/3.jpg",
+  "https://randomuser.me/api/portraits/women/4.jpg",
 ];
