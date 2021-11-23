@@ -1,3 +1,9 @@
+import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import {
   Avatar,
   Box,
@@ -6,15 +12,10 @@ import {
   Fade,
   IconButton,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
+import { styled } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
-import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
-import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 export default function HomeArea() {
   const [pics, setpics] = useState(1);
   const [searching, setsearching] = useState(false);
@@ -22,7 +23,7 @@ export default function HomeArea() {
   useEffect(() => {
     setTimeout(() => {
       setsearching(true);
-    },5000);
+    }, 2000);
   }, []);
   const inctement = () => {
     if (pics >= 99) setpics(1);
@@ -113,12 +114,13 @@ const DetailedUserInfos = ({ pics, ToggleOpen, inctement }) => {
 };
 
 const PreviewProfile = ({ inctement, pics, ToggleOpen }) => {
+  const Img = styled("img")({});
   return (
     <Box sx={classes.AvailableUserImages}>
-      <img
+      <Img
         src={`https://randomuser.me/api/portraits/women/${pics}.jpg`}
         alt="user-gallery"
-        style={classes.UserImage}
+        sx={classes.UserImage}
       />
 
       <InfoStack ToggleOpen={ToggleOpen} />
@@ -129,65 +131,68 @@ const PreviewProfile = ({ inctement, pics, ToggleOpen }) => {
 };
 
 const InfoStack = ({ inctement, ToggleOpen, color, noStatus }) => {
+  const p = window.innerHeight > 470 ? "1rem" : "12%";
   return (
     <Stack
       direction="row"
       justifyContent="space-between"
       sx={classes.InfoStack}
-      style={noStatus ? { position: "static" } : {}}
+      style={noStatus ? { position: "static"} : { paddingBottom: p}}
     >
-      <Stack direction="column" spacing={1}>
-        <Box>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Typography
-              variant="span"
-              sx={classes.userName}
-              style={color ? { color: "#000000" } : {}}
-            >
-              Name
-            </Typography>
-            <Typography
-              variant="span"
-              sx={classes.age}
-              style={color ? { color: "#000000" } : {}}
-            >
-              26
-            </Typography>
-          </Stack>
-          {noStatus ? (
-            false
-          ) : (
+      <div style={{position:"relative", width:"100%"}}>
+        <Stack direction="column" spacing={1}>
+          <Box>
             <Stack direction="row" spacing={1} alignItems="center">
-              <FiberManualRecordIcon
-                sx={classes.connectionStatus}
-                style={{ color: "#2df187" }}
-              />
-              <Typography sx={classes.connectionStatus}>
-                recently active
+              <Typography
+                variant="span"
+                sx={classes.userName}
+                style={color ? { color: "#000000" } : {}}
+              >
+                Name
+              </Typography>
+              <Typography
+                variant="span"
+                sx={classes.age}
+                style={color ? { color: "#000000" } : {}}
+              >
+                26
               </Typography>
             </Stack>
-          )}
-        </Box>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <LocationOnOutlinedIcon
-            sx={classes.mailes}
-            style={color ? { color: "#000000", opacity: ".5" } : {}}
-          />
-          <Typography
-            sx={classes.mailes}
-            style={color ? { color: "#000000", opacity: ".5" } : {}}
-          >
-            121 Kilometres away
-          </Typography>
+            {noStatus ? (
+              false
+            ) : (
+              <Stack direction="row" spacing={1} alignItems="center">
+                <FiberManualRecordIcon
+                  sx={classes.connectionStatus}
+                  style={{ color: "#2df187" }}
+                />
+                <Typography sx={classes.connectionStatus}>
+                  recently active
+                </Typography>
+              </Stack>
+            )}
+          </Box>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <LocationOnOutlinedIcon
+              sx={classes.mailes}
+              style={color ? { color: "#000000", opacity: ".5" } : {}}
+            />
+            <Typography
+              sx={classes.mailes}
+              style={color ? { color: "#000000", opacity: ".5" } : {}}
+            >
+              121 Kilometres away
+            </Typography>
+          </Stack>
         </Stack>
-      </Stack>
-      {noStatus ? (
-        false
-      ) : (
-        <IconButton sx={classes.infoButton} onClick={ToggleOpen}>
-          <InfoRoundedIcon sx={{ fontSize: "2rem" }} />
-        </IconButton>
-      )}
+        {noStatus ? (
+          false
+        ) : (
+          <IconButton sx={classes.infoButton} onClick={ToggleOpen}>
+            <InfoRoundedIcon sx={classes.InfoIcon} />
+          </IconButton>
+        )}
+      </div>
     </Stack>
   );
 };
@@ -218,8 +223,8 @@ const ButtonsStack = ({ inctement, contained }) => {
 
 const classes = {
   root: {
-    height: {xs:"calc(100vh - 100px)", md:"100vh"},
-    display: {xs:"block", md:"grid"},
+    height: { xs: "calc(100vh - 100px)", md: "100vh" },
+    display: { xs: "block", md: "grid" },
     placeItems: "center",
   },
   DownButton: {
@@ -241,8 +246,8 @@ const classes = {
   },
   AvailableUserBox: {
     position: "relative",
-    width:  {xs:"100%", md:"370px"},
-    height:{xs:"100%", md:"640px"},
+    width: { xs: "100%", md: "370px" },
+    height: { xs: "100%", md: "640px" },
     borderRadius: "10px",
     boxShadow:
       "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -281,6 +286,7 @@ const classes = {
     height: "100%",
     borderRadius: "10px",
     position: "relative",
+    backgroundColor: { xs: "#000000", md: "transparent" },
   },
   AvailableUserInfos: {
     backgroundColor: "#FFFFFF",
@@ -293,7 +299,7 @@ const classes = {
   UserImage: {
     width: "100%",
     height: "100%",
-    objectFit: "cover",
+    objectFit: { xs: "contain", md: "cover" },
     borderRadius: "10px",
   },
   UserDetailedImage: {
@@ -302,7 +308,11 @@ const classes = {
     borderRadius: "10px 10px 0 0",
     height: "100%",
   },
-  imgwraper: { width: "100%", position: "relative", height: "70%" },
+  imgwraper: {
+    width: "100%",
+    position: "relative",
+    height: { xs: "auto", md: "70%" },
+  },
   BottomShadowdetailed: {
     position: "absolute",
     top: 0,
@@ -323,7 +333,7 @@ const classes = {
     position: "absolute",
     width: "100%",
     bottom: "1rem",
-    zIndex: 2,
+    zIndex: 3,
   },
   InfoStack: {
     position: "absolute",
@@ -347,8 +357,8 @@ const classes = {
   },
   cross: {
     color: "secondary.main",
-    width: "2.5rem",
-    height: "2.5rem",
+    width: { xs: "1.5rem", sm: "2.5rem" },
+    height: { xs: "1.5rem", sm: "2.5rem" },
     transition: "all .2s",
     "&:hover": {
       transform: "scale(1.08)",
@@ -356,8 +366,8 @@ const classes = {
   },
   hearth: {
     color: "#21d07c",
-    width: "2.5rem",
-    height: "2.5rem",
+    width: { xs: "1.5rem", sm: "2.5rem" },
+    height: { xs: "1.5rem", sm: "2.5rem" },
     transition: "all .2s",
     "&:hover": {
       transform: "scale(1.08)",
@@ -365,31 +375,32 @@ const classes = {
   },
   userName: {
     fontFamily: "Nova",
-    fontSize: "2rem",
+    fontSize: { xs: "1.2rem", sm: "2rem" },
     textTransform: "capitalize",
   },
   age: {
     fontFamily: "Roboto",
-    fontSize: "1.5rem",
+    fontSize: { xs: "1rem", sm: "1.5rem" },
     fontWeight: 300,
   },
   connectionStatus: {
     fontFamily: "Roboto",
-    fontSize: ".9rem",
+    fontSize: { xs: ".7rem", sm: ".9rem" },
     fontWeight: 300,
     textTransform: "capitalize",
   },
   mailes: {
     fontFamily: "Nova",
-    fontSize: "1.1rem",
+    fontSize: { xs: ".8rem", sm: "1.1rem" },
     fontWeight: 300,
     opacity: 0.8,
     textTransform: "capitalize",
   },
   infoButton: {
     position: "absolute",
-    right: "45px",
+    right: "1.5rem",
     bottom: "6px",
     color: "#FFFFFF",
   },
+  InfoIcon: { fontSize: { xs: "1.5rem", sm: "2rem" } },
 };

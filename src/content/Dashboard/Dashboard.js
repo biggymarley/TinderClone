@@ -6,6 +6,7 @@ import {
   AppBar,
   Avatar,
   Button,
+  Fade,
   IconButton,
   Slide,
   Stack,
@@ -55,12 +56,17 @@ export default function Dashboard() {
           <HeaderTab value={TabsIndex} />
         </Drawer>
       ) : (
-        <MobileRander TabsIndex={TabsIndex} setTabsIndex={setTabsIndex}/>
+        <MobileRander TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
       )}
 
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: "#f0f2f4", my: { xs: "50px", md: "0" } }}
+        sx={{
+          flexGrow: 1,
+          bgcolor: "#f0f2f4",
+          my: { xs: "50px", md: "0" },
+          minHeight: { xs: "calc(100vh - 100px)", md: "100vh" },
+        }}
       >
         <MainTab TabsIndex={TabsIndex} />
       </Box>
@@ -69,6 +75,8 @@ export default function Dashboard() {
 }
 
 const MobileRander = ({ setTabsIndex }) => {
+  const { setIslogged } = useContext(LogginContext);
+
   return (
     <>
       <AppBar
@@ -101,6 +109,9 @@ const MobileRander = ({ setTabsIndex }) => {
             <Logo sx={classes.Logo} />
             <Typography sx={classes.LogoName}>matcha</Typography>
           </Box>
+          <IconButton onClick={() => setIslogged(false)} sx={{ padding: 0 }}>
+            <PowerSettingsNewIcon sx={classes.MobileIcons} />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <AppBar
@@ -113,13 +124,13 @@ const MobileRander = ({ setTabsIndex }) => {
           sx={{ display: "flex", justifyContent: "space-around" }}
         >
           <IconButton onClick={() => setTabsIndex("MainTab")}>
-            <Logo sx={{ color: "#00000020", fontSize: "2rem" }} />
+            <Logo sx={classes.MobileIcons} />
           </IconButton>
-          <IconButton onClick={() => setTabsIndex("MainTab")}>
-            <MatchesIcon sx={{ color: "#00000020", fontSize: "2rem" }} />
+          <IconButton onClick={() => setTabsIndex("Matches")}>
+            <MatchesIcon sx={classes.MobileIcons} />
           </IconButton>
-          <IconButton onClick={() => setTabsIndex("MainTab")}>
-            <MessageIcon sx={{ color: "#00000020", fontSize: "2rem" }} />
+          <IconButton onClick={() => setTabsIndex("Messages")}>
+            <MessageIcon sx={classes.MobileIcons} />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -144,6 +155,16 @@ const MainTab = ({ TabsIndex }) => {
           <ProfileArea TabsIndex={TabsIndex} />
         </TabPanel>
       </Slide>
+      <Fade in={TabsIndex === "Messages"} sx={classes.MobileTabs}>
+        <TabPanel value="Messages" sx={{ padding: "0 !important" }}>
+          <Messages />
+        </TabPanel>
+      </Fade>
+      <Fade in={TabsIndex === "Matches"}>
+        <TabPanel value="Matches" sx={classes.MobileTabs}>
+          <Matches />
+        </TabPanel>
+      </Fade>
     </TabContext>
   );
 };
@@ -181,7 +202,7 @@ const HomeTab = () => {
         <Box>
           <TabList
             onChange={handleChange}
-            aria-label="lab API tabs example"
+            aria-label="tab"
             sx={classes.tablist}
             textColor="secondary"
             indicatorColor="secondary"
@@ -258,7 +279,7 @@ const classes = {
     height: { xs: "60px", lg: "73px" },
     px: ".5rem !important",
   },
-
+  MobileIcons: { color: "#00000020", fontSize: "2rem" },
   userName: {
     color: "#FFFFFF",
     fontFamily: "Nova",
@@ -296,5 +317,13 @@ const classes = {
     fontSize: { xs: "1.5rem", md: "2.4rem" },
     letterSpacing: "-1px",
     color: "secondary.main",
+    "@media (max-width: 300px)": {
+      display: "none",
+    },
+    display:"block"
+  },
+  MobileTabs: {
+    minHeight: "100%",
+    backgroundColor: "#FFFFFF",
   },
 };
