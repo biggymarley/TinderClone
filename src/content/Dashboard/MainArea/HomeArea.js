@@ -294,7 +294,7 @@ const classes = {
     position: "relative",
     width: "100%",
     height: "100%",
-    overflow: "clip auto",
+    overflow: "auto",
   },
   UserImage: {
     width: "100%",
