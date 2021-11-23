@@ -65,6 +65,7 @@ export default function Dashboard() {
           flexGrow: 1,
           bgcolor: "#f0f2f4",
           my: { xs: "50px", md: "0" },
+          // mx: { xs: "5px", md: "0" },
           minHeight: { xs: "calc(100vh - 100px)", md: "100vh" },
         }}
       >

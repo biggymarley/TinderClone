@@ -82,9 +82,9 @@ export const ChipFactory = ({ hoobies, formik, HandlHoobies }) => {
   return hoobies.map((hoobie, index) => (
     <Grid item key={index}>
       <Typography
-        sx={classes.hoobie}
+        sx={formik === false ? classes.infohoobie :classes.hoobie}
         name={hoobie}
-        style={formik.values.hoobies.includes(hoobie) ? classes.choosen : {}}
+        style={formik?.values?.hoobies.includes(hoobie) ? classes.choosen : {}}
         onClick={HandlHoobies ? HandlHoobies : () => {}}
       >
         {hoobie}
@@ -150,6 +150,18 @@ const classes = {
     "&:hover": {
       transform: "scale(1.08)",
     },
+  },
+  infohoobie: {
+    fontFamily: "Roboto",
+    fontWeight: 400,
+    border: "1px solid #505965",
+    p: "13px",
+    color: "#505965",
+    whiteSpace: "nowrap",
+    lineHeight: "0",
+    fontSize: "12px",
+    borderRadius: "12em",
+    opacity: 0.9,
   },
   choosen: {
     border: "1px solid #fe3f61",

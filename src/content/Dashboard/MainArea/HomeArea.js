@@ -12,10 +12,14 @@ import {
   Fade,
   IconButton,
   Stack,
-  Typography
+  Grid,
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import { ChipFactory } from "../CreationStep/PassionsDialog";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 export default function HomeArea() {
   const [pics, setpics] = useState(1);
   const [searching, setsearching] = useState(false);
@@ -57,7 +61,7 @@ const NoMatchingProfiles = () => {
 
 const AvailableProfiles = ({ inctement, pics }) => {
   const [openPinfo, setopenPinfo] = useState(false);
-
+  const Div = styled("div")({});
   const ToggleOpen = () => {
     setopenPinfo(!openPinfo);
     console.log(openPinfo);
@@ -66,16 +70,16 @@ const AvailableProfiles = ({ inctement, pics }) => {
   return (
     <Box sx={classes.AvailableUserBox}>
       <Fade in={!openPinfo}>
-        <div style={{ width: "100%", height: "100%", position: "absolute" }}>
+        <Div sx={classes.ProfileWraper}>
           <PreviewProfile
             inctement={inctement}
             pics={pics}
             ToggleOpen={ToggleOpen}
           />
-        </div>
+        </Div>
       </Fade>
       <Fade in={openPinfo}>
-        <div style={{ height: "100%" }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <DetailedUserInfos
             pics={pics}
             ToggleOpen={ToggleOpen}
@@ -103,6 +107,15 @@ const DetailedUserInfos = ({ pics, ToggleOpen, inctement }) => {
       </Box>
       <InfoStack color={true} noStatus={true} />
       <Divider />
+      <Grid container spacing={1} sx={{ padding: "1rem" }}>
+        <Grid item xs={12}>
+          <Typography variant="span" sx={classes.passionsTitle} paragraph>
+            Passions
+          </Typography>
+        </Grid>
+        <ChipFactory hoobies={hoobies} formik={false} HandlHoobies={false} />
+      </Grid>
+      <Divider />
       <Box display="grid" placeItems="center" minHeight="60px">
         <Button sx={classes.reportButton}>Report Name</Button>
       </Box>
@@ -126,20 +139,42 @@ const PreviewProfile = ({ inctement, pics, ToggleOpen }) => {
       <InfoStack ToggleOpen={ToggleOpen} />
       <ButtonsStack inctement={inctement} />
       <Box sx={classes.BottomShadow}></Box>
+      <BrowseImgs />
     </Box>
   );
 };
 
+const BrowseImgs = () => {
+  return (
+    <Grid container sx={classes.BrowseImgs}>
+      <Grid item xs={6} sx={{ display: "flex" }}>
+        <IconButton sx={classes.navigationButton} disableRipple>
+          <ChevronLeftRoundedIcon sx={{ color: "#FFFFFF", fontSize: "3rem" }} />
+        </IconButton>
+      </Grid>
+      <Grid item xs={6} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <IconButton sx={classes.navigationButton} disableRipple>
+          <ChevronRightRoundedIcon
+            sx={{ color: "#FFFFFF", fontSize: "3rem", justifySelf:"flex-start" }}
+          />
+        </IconButton>
+      </Grid>
+    </Grid>
+  );
+};
+
 const InfoStack = ({ inctement, ToggleOpen, color, noStatus }) => {
-  const p = window.innerHeight > 470 ? "1rem" : "12%";
+  const p = window.innerHeight > 470 ? "1rem" : "15%";
   return (
     <Stack
       direction="row"
       justifyContent="space-between"
       sx={classes.InfoStack}
-      style={noStatus ? { position: "static"} : { paddingBottom: p}}
+      style={
+        noStatus ? { position: "static", width: "auto" } : { paddingBottom: p }
+      }
     >
-      <div style={{position:"relative", width:"100%"}}>
+      <div style={{ position: "relative", width: "100%" }}>
         <Stack direction="column" spacing={1}>
           <Box>
             <Stack direction="row" spacing={1} alignItems="center">
@@ -234,6 +269,19 @@ const classes = {
     bottom: "-15px",
     right: "20px",
   },
+  ProfileWraper: {
+    width: { xs: "99%", md: "100%" },
+    height: "100%",
+    position: "absolute",
+  },
+  BrowseImgs: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+  },
+  navigationButton: { color: "#FFFFFF", width: "100%", borderRadius: "0", background:"transparent !important"  },
+
   reportButton: {
     color: "#000000",
     opacity: 0.3,
@@ -246,11 +294,15 @@ const classes = {
   },
   AvailableUserBox: {
     position: "relative",
+    display: "flex",
+    justifyContent: "center",
     width: { xs: "100%", md: "370px" },
     height: { xs: "100%", md: "640px" },
     borderRadius: "10px",
-    boxShadow:
-      "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+    boxShadow: {
+      xs: "none",
+      md: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+    },
   },
   NoMatchingRoot: {
     position: "relative",
@@ -290,7 +342,7 @@ const classes = {
   },
   AvailableUserInfos: {
     backgroundColor: "#FFFFFF",
-    borderRadius: "10px",
+    borderRadius: { xs: "0", md: "10px" },
     position: "relative",
     width: "100%",
     height: "100%",
@@ -305,7 +357,6 @@ const classes = {
   UserDetailedImage: {
     width: "100%",
     objectFit: "cover",
-    borderRadius: "10px 10px 0 0",
     height: "100%",
   },
   imgwraper: {
@@ -403,4 +454,17 @@ const classes = {
     color: "#FFFFFF",
   },
   InfoIcon: { fontSize: { xs: "1.5rem", sm: "2rem" } },
+  passionsTitle: {
+    fontSize: { xs: ".9rem", sm: "1rem" },
+    fontWeight: "500",
+    fontFamily: "Roboto",
+  },
 };
+
+const hoobies = [
+  "Emancipation",
+  "Engagement",
+  "Development",
+  "Nutrition",
+  "Europe",
+];
