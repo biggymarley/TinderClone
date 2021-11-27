@@ -24,12 +24,12 @@ import {
   MatchesIcon,
 } from "../Home/ContentFactory/IconFactory";
 import HomeArea from "./MainArea/HomeArea";
-import ProfileArea from "./MainArea/ProfileArea";
+import ProfileArea from "./CreationStep/profile/ProfileArea";
 import Matches from "./matches/Matches";
 import Messages from "./messages/Messages";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import ProfileTab from "./CreationStep/profile/ProfileTab";
 export default function Dashboard() {
   const drawerWidth = 375;
   const [TabsIndex, setTabsIndex] = useState("MainTab");
@@ -227,9 +227,6 @@ const HomeTab = () => {
   );
 };
 
-const ProfileTab = () => {
-  return <Box>Hello</Box>;
-};
 
 const DraweHeader = ({ TabsIndex, setTabsIndex }) => {
   const { setIslogged } = useContext(LogginContext);

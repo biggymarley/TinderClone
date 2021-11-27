@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function ProfileArea() {
+export default function ProfileTab() {
     return (
         <div>
-            dddas
+            dd
         </div>
     )
 }

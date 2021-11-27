@@ -565,22 +565,6 @@ const classes = {
   },
 };
 
-const hoobies = [
-  "Emancipation",
-  "Engagement",
-  "Development",
-  "Nutrition",
-  "Europe",
-];
-
-const Imgs = [
-  "https://randomuser.me/api/portraits/women/0.jpg",
-  "https://randomuser.me/api/portraits/women/1.jpg",
-  "https://randomuser.me/api/portraits/women/2.jpg",
-  "https://randomuser.me/api/portraits/women/3.jpg",
-  "https://randomuser.me/api/portraits/women/4.jpg",
-];
-
 const availabeUsers = [
   {
     name: "user",
