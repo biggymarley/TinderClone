@@ -1,10 +1,13 @@
-import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { Avatar, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box } from "@mui/system";
+import { Box, fontFamily } from "@mui/system";
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import SettingsIcon from '@mui/icons-material/Settings';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 export default function ProfileArea() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -18,21 +21,56 @@ const WebRender = () => {
 const MobileRender = () => {
   return (
     <Box sx={classes.MobileRoot}>
+      <Toolbar/>
       <UserAvatarBox />
       <UserInfoBox />
+      <UserButtonsBox />
+      <Toolbar/>
+
     </Box>
   );
 };
 
+const UserButtonsBox = () => {
+  return (
+    <Stack
+      direction="row"
+      justifyContent="center"
+      sx={classes.UserButtonsStack}
+    >
+      <ButtonFactory />
+    </Stack>
+  );
+};
+
+const ButtonFactory = () => {
+  return Buttons.map((button) => (
+    <Stack direction="column" spacing={1.5} sx={button.position}>
+      <IconButton sx={button.buttonstyle}>{button.Icon}</IconButton>
+      <Typography sx={classes.label}>{button.label}</Typography>
+    </Stack>
+  ));
+};
+
 const UserInfoBox = () => {
   return (
-    <Stack direction="column" sx={{ zIndex: 1, pt: "2rem" }} >
-      <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+    <Stack direction="column" sx={{ zIndex: 1, pt: "2rem" }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={2}
+      >
         <Typography sx={classes.userName}>Ayoub</Typography>
         <Typography sx={classes.userAge}>27</Typography>
       </Stack>
-      <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
-        <LocationOnIcon color="secondary" sx={{fontSize: "1.6rem",}}/>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+      >
+        <LocationOnIcon color="secondary" sx={{ fontSize: "1.6rem" }} />
         <Typography sx={classes.userLocation}>Khouribga, morocco</Typography>
       </Stack>
     </Stack>
@@ -63,12 +101,14 @@ const UserAvatarBox = () => {
 const classes = {
   MobileRoot: {
     width: "100%",
-    height: "60vh",
+    height:"100%",
+    minHeight: "60vh",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
+    paddingBottom:"6rem",
     "&::before": {
       content: `''`,
       backgroundColor: "#FFFFFF",
@@ -77,7 +117,7 @@ const classes = {
       width: "200%",
       position: "absolute",
       boxShadow:
-        "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
+        "rgb(50 50 93 / 25%) 0px 17px 10px -17px, rgb(0 0 0 / 30%) 0px 19px 0px -38px",
     },
   },
   UserAvatarBox: {
@@ -137,7 +177,6 @@ const classes = {
     fontFamily: "Nova",
     fontSize: { xs: "1.9rem", sm: "2rem" },
     textTransform: "capitalize",
-
   },
   userAge: {
     fontFamily: "Roboto",
@@ -148,7 +187,89 @@ const classes = {
     fontFamily: "Roboto",
     fontSize: ".9rem",
     textTransform: "capitalize",
-    color:"secondary.main",
-    lineHeight:"1"
+    color: "secondary.main",
+    lineHeight: "1",
+
   },
+  UserButtonsStack: {
+    zIndex: 1,
+    pt: "4rem",
+    position: "relative",
+    width: "80%",
+  },
+  EditProfileButton: {
+    backgroundColor: "#FFFFFF",
+    boxShadow:
+      "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+    p: ".8rem",
+    placeSelf: "center",
+  },
+  label: {
+    fontSize: ".8rem",
+    fontFamily: "Nova",
+    opacity: ".5",
+    letterSpacing: "1px",
+    textTransform: "uppercase",
+    "@media(max-width:315px)":{
+      display:"none"
+    }
+  },
+  EditProfileIcon: {
+    fontSize: "1.8rem",
+  },
+  CameraAltIcon:{
+    color:"#FFFFFF"
+  },
+  SettingsIcon:{}
+  
 };
+
+const Buttons = [
+  {
+    label: "Edit profile",
+    Icon: <EditRoundedIcon sx={classes.EditProfileIcon} />,
+    buttonstyle: {
+      backgroundColor: "#FFFFFF",
+      boxShadow:
+        "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+      p: ".8rem",
+      placeSelf: "center",
+    },
+    position:{
+      position:'absolute',
+      top:"80px"
+    }
+  },
+
+  {
+    label: "Add Media",
+    Icon: <CameraAltIcon sx={classes.CameraAltIcon} />,
+    buttonstyle: {
+      backgroundColor: "#fe3f61 !important",
+      color:"#FFFFFF",
+      boxShadow:
+        "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+      p: ".7rem",
+      placeSelf: "center",
+    },
+    position:{
+      position:'absolute',
+      right:0
+    }
+  },
+  {
+    label: "Settings",
+    Icon: <SettingsIcon sx={classes.SettingsIcon} />,
+    buttonstyle: {
+      backgroundColor: "#FFFFFF",
+      boxShadow:
+        "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+      p: ".7rem",
+      placeSelf: "center",
+    },
+    position:{
+      position:'absolute',
+      left:0,      
+    }
+  },
+];

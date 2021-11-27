@@ -8,7 +8,7 @@
   font-family: "Nova";
   src: local("FontsFree-Net-Proxima-Nova-Sbold"),
     url("./assets/fonts/FontsFree-Net-Proxima-Nova-Sbold.otf") format("opentype");
-  font-display: swap;
+    font-display: swap;
 }
 
 
