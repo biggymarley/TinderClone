@@ -151,11 +151,11 @@ const MainTab = ({ TabsIndex }) => {
           <HomeArea TabsIndex={TabsIndex} />
         </TabPanel>
       </Slide>
-      <Slide direction="left" in={TabsIndex === "ProfileTab"}>
+      <Fade in={TabsIndex === "ProfileTab"}>
         <TabPanel value="ProfileTab" sx={{ padding: "0 !important" }}>
           <ProfileArea TabsIndex={TabsIndex} />
         </TabPanel>
-      </Slide>
+      </Fade>
       <Fade in={TabsIndex === "Messages"} sx={classes.MobileTabs}>
         <TabPanel value="Messages" sx={{ padding: "0 !important" }}>
           <Messages />

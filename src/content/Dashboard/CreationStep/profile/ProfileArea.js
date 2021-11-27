@@ -1,10 +1,10 @@
-import React from "react";
+import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/system";
-import { Avatar, Button } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
-
+import React from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 export default function ProfileArea() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -17,9 +17,25 @@ const WebRender = () => {
 
 const MobileRender = () => {
   return (
-    <div style={classes.MobileRoot}>
+    <Box sx={classes.MobileRoot}>
       <UserAvatarBox />
-    </div>
+      <UserInfoBox />
+    </Box>
+  );
+};
+
+const UserInfoBox = () => {
+  return (
+    <Stack direction="column" sx={{ zIndex: 1, pt: "2rem" }} >
+      <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+        <Typography sx={classes.userName}>Ayoub</Typography>
+        <Typography sx={classes.userAge}>27</Typography>
+      </Stack>
+      <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+        <LocationOnIcon color="secondary" sx={{fontSize: "1.6rem",}}/>
+        <Typography sx={classes.userLocation}>Khouribga, morocco</Typography>
+      </Stack>
+    </Stack>
   );
 };
 
@@ -32,7 +48,11 @@ const UserAvatarBox = () => {
       />
       <Box sx={classes.progressPadding} />
       <Box sx={classes.progress} />
-      <Box sx={classes.progressFill} />
+      <CircularProgress
+        variant="determinate"
+        value={30}
+        sx={classes.progressFill}
+      />
       <Button sx={classes.Completed} variant="contained">
         30% Complete
       </Button>
@@ -46,7 +66,19 @@ const classes = {
     height: "60vh",
     display: "flex",
     justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
+    position: "relative",
+    "&::before": {
+      content: `''`,
+      backgroundColor: "#FFFFFF",
+      borderRadius: "0 0 50% 50%",
+      height: "100%",
+      width: "200%",
+      position: "absolute",
+      boxShadow:
+        "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
+    },
   },
   UserAvatarBox: {
     position: "relative",
@@ -56,29 +88,36 @@ const classes = {
   UserAvatar: {
     width: { xs: "5em", sm: "9em" },
     height: { xs: "5em", sm: "9em" },
-    zIndex: "2"
+    zIndex: "2",
   },
   progress: {
-    backgroundColor: "#21262e40",
+    backgroundColor: "#21262e20",
     position: "absolute",
-    width: { xs: "5em", sm: "13em" },
-    height: { xs: "5em", sm: "13em" },
+    width: { xs: "8em", sm: "13em" },
+    height: { xs: "8em", sm: "13em" },
     borderRadius: "50%",
   },
   progressPadding: {
-    backgroundColor: "#f0f2f4",
+    backgroundColor: "#FFFFFF",
     position: "absolute",
-    width: { xs: "5em", sm: "12em" },
-    height: { xs: "5em", sm: "12em" },
+    width: { xs: "7em", sm: "12em" },
+    height: { xs: "7em", sm: "12em" },
     borderRadius: "50%",
     zIndex: "1",
   },
   progressFill: {
-    backgroundColor: "#fe3f61",
-    borderRadius: "50%",
+    color: "secondary.main",
     position: "absolute",
-    width: { xs: "5em", sm: "13em" },
-    height: { xs: "5em", sm: "13em" },
+    "&.MuiCircularProgress-root": {
+      width: { xs: "8em !important", sm: "13em !important" },
+      height: { xs: "8em !important", sm: "13em !important" },
+      transform: "rotate(90deg) !important",
+    },
+    "& .MuiCircularProgress-circle": {
+      strokeWidth: { xs: 2.7, sm: 1.7 },
+      r: { xs: "20.65", sm: "21.15" },
+    },
+    zIndex: 1,
   },
   Completed: {
     color: "#FFFFFF",
@@ -93,5 +132,23 @@ const classes = {
     bottom: "-15px",
     whiteSpace: "pre",
     zIndex: "3",
+  },
+  userName: {
+    fontFamily: "Nova",
+    fontSize: { xs: "1.9rem", sm: "2rem" },
+    textTransform: "capitalize",
+
+  },
+  userAge: {
+    fontFamily: "Roboto",
+    fontSize: { xs: "1.5rem", sm: "1.6rem" },
+    textTransform: "capitalize",
+  },
+  userLocation: {
+    fontFamily: "Roboto",
+    fontSize: ".9rem",
+    textTransform: "capitalize",
+    color:"secondary.main",
+    lineHeight:"1"
   },
 };
