@@ -3,35 +3,32 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import {
-  AppBar,
   Avatar,
-  Button,
-  Fade,
-  IconButton,
+  Button, IconButton,
   Slide,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import { useTheme } from "@mui/material/styles";
 import Tab from "@mui/material/Tab";
 import Toolbar from "@mui/material/Toolbar";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useContext, useState } from "react";
+import {
+  BrowserRouter, Link, Route, Routes
+} from "react-router-dom";
 import { LogginContext } from "../../App";
 import {
-  Logo,
-  MessageIcon,
-  MatchesIcon,
+  Logo
 } from "../Home/ContentFactory/IconFactory";
-import HomeArea from "./MainArea/HomeArea";
 import ProfileArea from "./CreationStep/profile/ProfileArea";
+import ProfileTab from "./CreationStep/profile/ProfileTab";
+import HomeArea from "./MainArea/HomeArea";
 import Matches from "./matches/Matches";
 import Messages from "./messages/Messages";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import ProfileTab from "./CreationStep/profile/ProfileTab";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
+import TopAppbar, { BottomAppbar } from "./MobileAppbars/MobileAppbars";
 export default function Dashboard() {
   const drawerWidth = 375;
   const [TabsIndex, setTabsIndex] = useState("MainTab");
@@ -68,7 +65,6 @@ export default function Dashboard() {
             flexGrow: 1,
             bgcolor: "#f0f2f4",
             my: { xs: "50px", md: "0" },
-            // mx: { xs: "5px", md: "0" },
             minHeight: { xs: "calc(100vh - 100px)", md: "100vh" },
           }}
         >
@@ -80,72 +76,10 @@ export default function Dashboard() {
 }
 
 const MobileRander = ({ setTabsIndex }) => {
-  const { setIslogged } = useContext(LogginContext);
-
   return (
     <>
-      <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{ top: 0, bottom: "auto", backgroundColor: "#FFFFFF" }}
-      >
-        <Toolbar variant="dense">
-          <Box>
-            <IconButton
-              sx={classes.UserButton}
-              style={{ width: 35, height: 35 }}
-            >
-              <Link to={"/profile"}>
-                <Avatar
-                  alt="profile-pic"
-                  src="https://picsum.photos/200/300"
-                  sx={{ width: 35, height: 35 }}
-                />
-              </Link>
-            </IconButton>
-          </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Logo sx={classes.Logo} />
-            <Typography sx={classes.LogoName}>matcha</Typography>
-          </Box>
-          <IconButton onClick={() => setIslogged(false)} sx={{ padding: 0 }}>
-            <PowerSettingsNewIcon sx={classes.MobileIcons} />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{ top: "auto", bottom: 0, backgroundColor: "#FFFFFF" }}
-      >
-        <Toolbar
-          variant="dense"
-          sx={{ display: "flex", justifyContent: "space-around" }}
-        >
-            <Link to={"/"}>
-          <IconButton onClick={() => setTabsIndex("MainTab")}>
-              <Logo sx={classes.MobileIcons} />
-          </IconButton>
-            </Link>
-            <Link to={"/matches"}>
-          <IconButton onClick={() => setTabsIndex("Matches")}>
-              <MatchesIcon sx={classes.MobileIcons} />
-          </IconButton>
-            </Link>
-            <Link to={"/messages"}>
-          <IconButton onClick={() => setTabsIndex("Messages")}>
-              <MessageIcon sx={classes.MobileIcons} />
-          </IconButton>
-            </Link>
-        </Toolbar>
-      </AppBar>
+      <TopAppbar />
+      <BottomAppbar setTabsIndex={setTabsIndex} />
     </>
   );
 };
@@ -241,7 +175,7 @@ const DraweHeader = ({ TabsIndex, setTabsIndex }) => {
   return (
     <Toolbar sx={classes.HeaderRoot}>
       <Box sx={{ flexGrow: 1 }}>
-        <Link to="/profile" style={{textDecoration:"none"}}>
+        <Link to="/profile" style={{ textDecoration: "none" }}>
           <Button
             onClick={() => setTabsIndex("ProfileTab")}
             sx={classes.UserButton}
@@ -288,19 +222,18 @@ const classes = {
     height: { xs: "60px", lg: "73px" },
     px: ".5rem !important",
   },
-  MobileIcons: { color: "#00000020", fontSize: "2rem" },
   userName: {
     color: "#FFFFFF",
     fontFamily: "Nova",
     letterSpacing: "1px",
     fontSize: "1rem",
     textTransform: "capitalize",
-    textDecoration:"none"
+    textDecoration: "none",
   },
   UserButton: {
     color: "#000000",
     borderRadius: "12em",
-    textDecoration:"none"
+    textDecoration: "none",
   },
   logoutButton: {
     backgroundColor: "#00000020",
@@ -322,16 +255,6 @@ const classes = {
     width: { xs: "30px", md: "39.936px" },
     height: { xs: "40px", md: "52.97355px" },
     color: "secondary.main",
-  },
-  LogoName: {
-    fontFamily: "Gotham",
-    fontSize: { xs: "1.5rem", md: "2.4rem" },
-    letterSpacing: "-1px",
-    color: "secondary.main",
-    "@media (max-width: 300px)": {
-      display: "none",
-    },
-    display: "block",
   },
   MobileTabs: {
     minHeight: "100%",

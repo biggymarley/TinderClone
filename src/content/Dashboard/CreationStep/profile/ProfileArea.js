@@ -1,14 +1,30 @@
-import { Avatar, Button, IconButton, Slide, Stack, Toolbar, Typography } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Drawer,
+  IconButton,
+  Slide,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, fontFamily } from "@mui/system";
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import SettingsIcon from '@mui/icons-material/Settings';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-
+import SettingsIcon from "@mui/icons-material/Settings";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import {
+  Link,
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+const DrawerContext = React.createContext(false);
 export default function ProfileArea() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -20,17 +36,54 @@ const WebRender = () => {
 };
 
 const MobileRender = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const ToggleDrawer = () => {
+    setOpenDrawer(!openDrawer);
+  };
+  const location = useLocation();
+  useEffect(() => {
+    if (
+      location.pathname.search("profile/edit") > 0 ||
+      location.pathname.search("profile/media") > 0 ||
+      location.pathname.search("profile/settings") > 0
+    )
+      setOpenDrawer(true);
+    else setOpenDrawer(false);
+  }, [location]);
   return (
-    <Slide direction="right" in={true}>
-    <Box sx={classes.MobileRoot}>
-      <Toolbar/>
-      <UserAvatarBox />
-      <UserInfoBox />
-      <UserButtonsBox />
-      <Toolbar/>
-    </Box>
-    </Slide>
+    <DrawerContext.Provider value={{ ToggleDrawer, openDrawer }}>
+      <Slide direction="right" in={true}>
+        <Box sx={classes.MobileRoot}>
+          <Toolbar />
+          <UserAvatarBox />
+          <UserInfoBox />
+          <UserButtonsBox />
+          <Toolbar />
+        </Box>
+      </Slide>
+      <Drawer anchor={"bottom"} open={openDrawer}>
+        <Routes>
+          <Route path="/edit" element={<EditMobile />} />
+          <Route path="/media" element={<MediaMobile />} />
+          <Route path="/settings" element={<SettingsMobile />} />
+        </Routes>
+      </Drawer>
+    </DrawerContext.Provider>
   );
+};
+
+const EditMobile = () => {
+  return (
+    <Box sx={classes.Editpage}>
+      <Link to="..">Edit</Link>
+    </Box>
+  );
+};
+const MediaMobile = () => {
+  return <Box sx={classes.Editpage}> <Link to="..">media</Link></Box>;
+};
+const SettingsMobile = () => {
+  return <Box sx={classes.Editpage}> <Link to="..">settings</Link></Box>;
 };
 
 const UserButtonsBox = () => {
@@ -47,10 +100,12 @@ const UserButtonsBox = () => {
 
 const ButtonFactory = () => {
   return Buttons.map((button, index) => (
-    <Stack direction="column" spacing={1.5} sx={button.position} key={index}>
-      <IconButton sx={button.buttonstyle}>{button.Icon}</IconButton>
-      <Typography sx={classes.label}>{button.label}</Typography>
-    </Stack>
+    <Link to={button.link} style={button.position}>
+      <Stack direction="column" spacing={1.5} key={index}>
+        <IconButton sx={button.buttonstyle}>{button.Icon}</IconButton>
+        <Typography sx={classes.label}>{button.label}</Typography>
+      </Stack>
+    </Link>
   ));
 };
 
@@ -103,14 +158,14 @@ const UserAvatarBox = () => {
 const classes = {
   MobileRoot: {
     width: "100%",
-    height:"100%",
+    height: "100%",
     minHeight: "60vh",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
-    paddingBottom:"6rem",
+    paddingBottom: "6rem",
     "&::before": {
       content: `''`,
       backgroundColor: "#FFFFFF",
@@ -191,7 +246,6 @@ const classes = {
     textTransform: "capitalize",
     color: "secondary.main",
     lineHeight: "1",
-
   },
   UserButtonsStack: {
     zIndex: 1,
@@ -209,26 +263,31 @@ const classes = {
   label: {
     fontSize: ".8rem",
     fontFamily: "Nova",
+    color: "#000000",
     opacity: ".5",
     letterSpacing: "1px",
     textTransform: "uppercase",
-    "@media(max-width:315px)":{
-      display:"none"
-    }
+    "@media(max-width:315px)": {
+      display: "none",
+    },
   },
   EditProfileIcon: {
     fontSize: "1.8rem",
   },
-  CameraAltIcon:{
-    color:"#FFFFFF"
+  CameraAltIcon: {
+    color: "#FFFFFF",
   },
-  SettingsIcon:{}
-  
+  SettingsIcon: {},
+  Editpage: {
+    minHeight: "100vh",
+    backgroundColor: "#FFFFFF",
+  },
 };
 
 const Buttons = [
   {
     label: "Edit profile",
+    link: "edit",
     Icon: <EditRoundedIcon sx={classes.EditProfileIcon} />,
     buttonstyle: {
       backgroundColor: "#FFFFFF !important",
@@ -237,31 +296,35 @@ const Buttons = [
       p: ".8rem",
       placeSelf: "center",
     },
-    position:{
-      position:'absolute',
-      top:"80px",
+    position: {
+      position: "absolute",
+      textDecoration: "none",
 
-    }
+      top: "80px",
+    },
   },
 
   {
     label: "Add Media",
+    link: "media",
     Icon: <CameraAltIcon sx={classes.CameraAltIcon} />,
     buttonstyle: {
       backgroundColor: "#fe3f61 !important",
-      color:"#FFFFFF",
+      color: "#FFFFFF",
       boxShadow:
         "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
       p: ".7rem",
       placeSelf: "center",
     },
-    position:{
-      position:'absolute',
-      right:0
-    }
+    position: {
+      position: "absolute",
+      textDecoration: "none",
+      right: 0,
+    },
   },
   {
     label: "Settings",
+    link: "settings",
     Icon: <SettingsIcon sx={classes.SettingsIcon} />,
     buttonstyle: {
       backgroundColor: "#FFFFFF !important",
@@ -270,9 +333,10 @@ const Buttons = [
       p: ".7rem",
       placeSelf: "center",
     },
-    position:{
-      position:'absolute',
-      left:0,      
-    }
+    position: {
+      position: "absolute",
+      left: 0,
+      textDecoration: "none",
+    },
   },
 ];
