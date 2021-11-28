@@ -1,4 +1,4 @@
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Typography, Fade } from "@mui/material";
 import React from "react";
 
 export default function Matches() {
@@ -7,6 +7,7 @@ export default function Matches() {
 
 const NoMatches = () => {
   return (
+    <Fade in={true}>
     <Stack
       direction="column"
       spacing={6}
@@ -23,6 +24,7 @@ const NoMatches = () => {
       </Typography>
       </div>
     </Stack>
+    </Fade>
   );
 };
 

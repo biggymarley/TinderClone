@@ -1,4 +1,4 @@
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Typography, Fade } from "@mui/material";
 import React from "react";
 import {
   MessageIconLeft,
@@ -10,20 +10,22 @@ export default function Messages() {
 
 const NoMessages = () => {
   return (
-    <Stack direction="column" spacing={2} alignItems="center">
-      <Box display="flex" pt="2rem" position="relative">
-        <MessageIconLeft sx={classes.msgIconLeft} />
-        <MessageIconRight sx={classes.msgIconRight} className="tilte-up" />
-      </Box>
+    <Fade in={true}>
+      <Stack direction="column" spacing={2} alignItems="center">
+        <Box display="flex" pt="2rem" position="relative">
+          <MessageIconLeft sx={classes.msgIconLeft} />
+          <MessageIconRight sx={classes.msgIconRight} className="tilte-up" />
+        </Box>
 
-      <Typography sx={classes.title} paragraph>
-        Say Hello
-      </Typography>
-      <Typography sx={classes.desc}>
-        Looking to strike up a conversation? When you match with others, you can
-        send them a message under “Matches”
-      </Typography>
-    </Stack>
+        <Typography sx={classes.title} paragraph>
+          Say Hello
+        </Typography>
+        <Typography sx={classes.desc}>
+          Looking to strike up a conversation? When you match with others, you
+          can send them a message under “Matches”
+        </Typography>
+      </Stack>
+    </Fade>
   );
 };
 

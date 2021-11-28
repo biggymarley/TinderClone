@@ -1,4 +1,4 @@
-import { Avatar, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { Avatar, Button, IconButton, Slide, Stack, Toolbar, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, fontFamily } from "@mui/system";
@@ -8,6 +8,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SettingsIcon from '@mui/icons-material/Settings';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+
 export default function ProfileArea() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -20,14 +21,15 @@ const WebRender = () => {
 
 const MobileRender = () => {
   return (
+    <Slide direction="right" in={true}>
     <Box sx={classes.MobileRoot}>
       <Toolbar/>
       <UserAvatarBox />
       <UserInfoBox />
       <UserButtonsBox />
       <Toolbar/>
-
     </Box>
+    </Slide>
   );
 };
 
@@ -44,8 +46,8 @@ const UserButtonsBox = () => {
 };
 
 const ButtonFactory = () => {
-  return Buttons.map((button) => (
-    <Stack direction="column" spacing={1.5} sx={button.position}>
+  return Buttons.map((button, index) => (
+    <Stack direction="column" spacing={1.5} sx={button.position} key={index}>
       <IconButton sx={button.buttonstyle}>{button.Icon}</IconButton>
       <Typography sx={classes.label}>{button.label}</Typography>
     </Stack>
@@ -229,7 +231,7 @@ const Buttons = [
     label: "Edit profile",
     Icon: <EditRoundedIcon sx={classes.EditProfileIcon} />,
     buttonstyle: {
-      backgroundColor: "#FFFFFF",
+      backgroundColor: "#FFFFFF !important",
       boxShadow:
         "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
       p: ".8rem",
@@ -237,7 +239,8 @@ const Buttons = [
     },
     position:{
       position:'absolute',
-      top:"80px"
+      top:"80px",
+
     }
   },
 
@@ -261,7 +264,7 @@ const Buttons = [
     label: "Settings",
     Icon: <SettingsIcon sx={classes.SettingsIcon} />,
     buttonstyle: {
-      backgroundColor: "#FFFFFF",
+      backgroundColor: "#FFFFFF !important",
       boxShadow:
         "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
       p: ".7rem",

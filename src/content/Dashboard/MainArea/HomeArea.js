@@ -1,4 +1,6 @@
 import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
@@ -9,17 +11,11 @@ import {
   Box,
   Button,
   Divider,
-  Fade,
-  IconButton,
-  Stack,
-  Grid,
-  Typography,
+  Fade, Grid, IconButton, Slide, Stack, Typography
 } from "@mui/material";
 import { styled } from "@mui/system";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ChipFactory } from "../CreationStep/PassionsDialog";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 export const BrowseusersContext = React.createContext(null);
 export default function HomeArea() {
   const [pics, setpics] = useState(0);
@@ -40,24 +36,25 @@ export default function HomeArea() {
   };
 
   const browsing = () => {
-    // if (browseusers >= availabeUsers.length) setbrowseusers(null);s
     setbrowseusers(browseusers + 1);
     setpics(0);
   };
 
   return (
     <BrowseusersContext.Provider value={{ browseusers, browsing }}>
-      <Box sx={classes.root}>
-        {!searching || browseusers >= availabeUsers.length ? (
-          <NoMatchingProfiles />
-        ) : (
-          <AvailableProfiles
-            increment={increment}
-            decrement={decrement}
-            pics={pics}
-          />
-        )}
-      </Box>
+      <Slide direction='right' in={true} >
+        <Box sx={classes.root}>
+          {!searching || browseusers >= availabeUsers.length ? (
+            <NoMatchingProfiles />
+          ) : (
+            <AvailableProfiles
+              increment={increment}
+              decrement={decrement}
+              pics={pics}
+            />
+          )}
+        </Box>
+      </Slide>
     </BrowseusersContext.Provider>
   );
 }

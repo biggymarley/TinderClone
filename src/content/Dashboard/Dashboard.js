@@ -30,48 +30,52 @@ import Messages from "./messages/Messages";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ProfileTab from "./CreationStep/profile/ProfileTab";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
 export default function Dashboard() {
   const drawerWidth = 375;
   const [TabsIndex, setTabsIndex] = useState("MainTab");
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   return (
-    <Box sx={{ display: "flex", overflow: "hidden" }}>
-      {matches ? (
-        <Drawer
-          sx={{
-            width: drawerWidth,
-            display: { xs: "none", md: "block" },
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
+    <BrowserRouter>
+      <Box sx={{ display: "flex", overflow: "hidden" }}>
+        {matches ? (
+          <Drawer
+            sx={{
               width: drawerWidth,
-              overflow: "hidden",
-              boxSizing: "border-box",
-            },
-          }}
-          variant="permanent"
-          anchor="left"
-        >
-          <DraweHeader TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
-          <HeaderTab value={TabsIndex} />
-        </Drawer>
-      ) : (
-        <MobileRander TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
-      )}
+              display: { xs: "none", md: "block" },
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+                overflow: "hidden",
+                boxSizing: "border-box",
+              },
+            }}
+            variant="permanent"
+            anchor="left"
+          >
+            <DraweHeader TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
+            <HeaderTab value={TabsIndex} />
+          </Drawer>
+        ) : (
+          <MobileRander TabsIndex={TabsIndex} setTabsIndex={setTabsIndex} />
+        )}
 
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          bgcolor: "#f0f2f4",
-          my: { xs: "50px", md: "0" },
-          // mx: { xs: "5px", md: "0" },
-          minHeight: { xs: "calc(100vh - 100px)", md: "100vh" },
-        }}
-      >
-        <MainTab TabsIndex={TabsIndex} />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            bgcolor: "#f0f2f4",
+            my: { xs: "50px", md: "0" },
+            // mx: { xs: "5px", md: "0" },
+            minHeight: { xs: "calc(100vh - 100px)", md: "100vh" },
+          }}
+        >
+          <MainTab TabsIndex={TabsIndex} />
+        </Box>
       </Box>
-    </Box>
+    </BrowserRouter>
   );
 }
 
@@ -88,15 +92,16 @@ const MobileRander = ({ setTabsIndex }) => {
         <Toolbar variant="dense">
           <Box>
             <IconButton
-              onClick={() => setTabsIndex("ProfileTab")}
               sx={classes.UserButton}
               style={{ width: 35, height: 35 }}
             >
-              <Avatar
-                alt="profile-pic"
-                src="https://picsum.photos/200/300"
-                sx={{ width: 35, height: 35 }}
-              />
+              <Link to={"/profile"}>
+                <Avatar
+                  alt="profile-pic"
+                  src="https://picsum.photos/200/300"
+                  sx={{ width: 35, height: 35 }}
+                />
+              </Link>
             </IconButton>
           </Box>
           <Box
@@ -124,15 +129,21 @@ const MobileRander = ({ setTabsIndex }) => {
           variant="dense"
           sx={{ display: "flex", justifyContent: "space-around" }}
         >
+            <Link to={"/"}>
           <IconButton onClick={() => setTabsIndex("MainTab")}>
-            <Logo sx={classes.MobileIcons} />
+              <Logo sx={classes.MobileIcons} />
           </IconButton>
+            </Link>
+            <Link to={"/matches"}>
           <IconButton onClick={() => setTabsIndex("Matches")}>
-            <MatchesIcon sx={classes.MobileIcons} />
+              <MatchesIcon sx={classes.MobileIcons} />
           </IconButton>
+            </Link>
+            <Link to={"/messages"}>
           <IconButton onClick={() => setTabsIndex("Messages")}>
-            <MessageIcon sx={classes.MobileIcons} />
+              <MessageIcon sx={classes.MobileIcons} />
           </IconButton>
+            </Link>
         </Toolbar>
       </AppBar>
     </>
@@ -141,32 +152,29 @@ const MobileRander = ({ setTabsIndex }) => {
 
 const MainTab = ({ TabsIndex }) => {
   return (
-    <TabContext
-      value={TabsIndex}
-      textColor="secondary"
-      indicatorColor="secondary"
-    >
-      <Slide direction="right" in={TabsIndex === "MainTab"}>
-        <TabPanel value="MainTab" sx={{ padding: "0 !important" }}>
-          <HomeArea TabsIndex={TabsIndex} />
-        </TabPanel>
-      </Slide>
-      <Fade in={TabsIndex === "ProfileTab"}>
-        <TabPanel value="ProfileTab" sx={{ padding: "0 !important" }}>
-          <ProfileArea TabsIndex={TabsIndex} />
-        </TabPanel>
-      </Fade>
-      <Fade in={TabsIndex === "Messages"} sx={classes.MobileTabs}>
-        <TabPanel value="Messages" sx={{ padding: "0 !important" }}>
-          <Messages />
-        </TabPanel>
-      </Fade>
-      <Fade in={TabsIndex === "Matches"}>
-        <TabPanel value="Matches" sx={classes.MobileTabs}>
-          <Matches />
-        </TabPanel>
-      </Fade>
-    </TabContext>
+    <Routes>
+      <Route path="/" element={<HomeArea TabsIndex={TabsIndex} />} />
+      <Route
+        path="/profile/*"
+        element={<ProfileArea TabsIndex={TabsIndex} />}
+      />
+      <Route
+        path="/messages"
+        element={
+          <Box sx={classes.MobileTabs}>
+            <Messages />
+          </Box>
+        }
+      />
+      <Route
+        path="/matches"
+        element={
+          <Box sx={classes.MobileTabs}>
+            <Matches />
+          </Box>
+        }
+      />
+    </Routes>
   );
 };
 
@@ -227,35 +235,38 @@ const HomeTab = () => {
   );
 };
 
-
 const DraweHeader = ({ TabsIndex, setTabsIndex }) => {
   const { setIslogged } = useContext(LogginContext);
 
   return (
     <Toolbar sx={classes.HeaderRoot}>
       <Box sx={{ flexGrow: 1 }}>
-        <Button
-          onClick={() => setTabsIndex("ProfileTab")}
-          sx={classes.UserButton}
-          startIcon={
-            <Avatar
-              alt="profile-pic"
-              src="https://picsum.photos/200/300"
-              sx={{ width: 35, height: 35 }}
-            />
-          }
-        >
-          <Typography sx={classes.userName}>Biggy</Typography>
-        </Button>
+        <Link to="/profile" style={{textDecoration:"none"}}>
+          <Button
+            onClick={() => setTabsIndex("ProfileTab")}
+            sx={classes.UserButton}
+            startIcon={
+              <Avatar
+                alt="profile-pic"
+                src="https://picsum.photos/200/300"
+                sx={{ width: 35, height: 35 }}
+              />
+            }
+          >
+            <Typography sx={classes.userName}>Biggy</Typography>
+          </Button>
+        </Link>
       </Box>
       <Stack direction="row" spacing={1}>
         {TabsIndex === "ProfileTab" ? (
-          <IconButton
-            sx={classes.logoutButton}
-            onClick={() => setTabsIndex("MainTab")}
-          >
-            <Logo sx={{ color: "#FFFFFF", fontSize: "1.5rem" }} />
-          </IconButton>
+          <Link to="/">
+            <IconButton
+              sx={classes.logoutButton}
+              onClick={() => setTabsIndex("MainTab")}
+            >
+              <Logo sx={{ color: "#FFFFFF", fontSize: "1.5rem" }} />
+            </IconButton>
+          </Link>
         ) : (
           <></>
         )}
@@ -284,10 +295,12 @@ const classes = {
     letterSpacing: "1px",
     fontSize: "1rem",
     textTransform: "capitalize",
+    textDecoration:"none"
   },
   UserButton: {
     color: "#000000",
     borderRadius: "12em",
+    textDecoration:"none"
   },
   logoutButton: {
     backgroundColor: "#00000020",
@@ -318,7 +331,7 @@ const classes = {
     "@media (max-width: 300px)": {
       display: "none",
     },
-    display:"block"
+    display: "block",
   },
   MobileTabs: {
     minHeight: "100%",
