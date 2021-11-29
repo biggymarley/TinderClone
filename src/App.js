@@ -1,6 +1,8 @@
-import React, { Suspense, useState } from "react";
-import Loading from "./content/Loading/Loading";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { Suspense, useState } from "react";
+import { BrowserRouter } from "react-router-dom";
+import Loading from "./content/Loading/Loading";
+
 export const LogginContext = React.createContext(false);
 function App() {
   const [Islogged, setIslogged] = useState(true);
@@ -12,13 +14,18 @@ const theme = createTheme({
     secondary: {
       main: '#fe3f61',
     },
+    backgroundGraycolor:{
+      main: "#f0f2f4"
+    }
   },
 });
   return (
     <ThemeProvider theme={theme}>
     <Suspense fallback={<Loading />}>
       <LogginContext.Provider value={{ Islogged, setIslogged }}>
+      <BrowserRouter>
         <div className="fadein">{Islogged ? <Dashboard /> : <HomeRoot />}</div>
+        </BrowserRouter>
       </LogginContext.Provider>
     </Suspense>
     </ThemeProvider>

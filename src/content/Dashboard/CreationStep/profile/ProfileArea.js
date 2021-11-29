@@ -1,4 +1,5 @@
 import {
+  AppBar,
   Avatar,
   Button,
   Drawer,
@@ -24,6 +25,8 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
+import CreationStepper from '../CreationStepper';
 const DrawerContext = React.createContext(false);
 export default function ProfileArea() {
   const theme = useTheme();
@@ -72,18 +75,60 @@ const MobileRender = () => {
   );
 };
 
+const FixedAppbar = ({ title }) => {
+  const matches = useMediaQuery("@media(min-width: 200px)");
+  return (
+    <AppBar position="fixed" sx={classes.appbar} elevation={1}>
+      <Toolbar variant="dense" sx={{ px: ".5rem !important" }}>
+        <Typography sx={classes.appBartitle}>Edit Info</Typography>
+        <Link to=".." style={{position:"relative"}}>
+        {matches ? (
+          <Button
+          color="secondary"
+          sx={{
+            background: "transparent !important",
+            position: "absolute",
+            right: ".5rem",
+            top:"-18.5px"
+          }}
+          >
+            done
+          </Button>
+        ) : (
+          <IconButton sx={{color:"secondary.main"}}>
+          <DoneRoundedIcon />
+          </IconButton>
+        )}
+        </Link>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
 const EditMobile = () => {
   return (
     <Box sx={classes.Editpage}>
-      <Link to="..">Edit</Link>
+      <FixedAppbar />
+      <Toolbar />
+      <CreationStepper/>
     </Box>
   );
 };
 const MediaMobile = () => {
-  return <Box sx={classes.Editpage}> <Link to="..">media</Link></Box>;
+  return (
+    <Box sx={classes.Editpage}>
+      {" "}
+      <Link to="..">media</Link>
+    </Box>
+  );
 };
 const SettingsMobile = () => {
-  return <Box sx={classes.Editpage}> <Link to="..">settings</Link></Box>;
+  return (
+    <Box sx={classes.Editpage}>
+      {" "}
+      <Link to="..">settings</Link>
+    </Box>
+  );
 };
 
 const UserButtonsBox = () => {
@@ -156,6 +201,17 @@ const UserAvatarBox = () => {
 };
 
 const classes = {
+  appbar: {
+    backgroundColor: "#FFFFFF",
+    boxShadow:
+      "0px 2px 1px -1px rgb(0 0 0 / 5%), 0px 1px 1px 0px rgb(0 0 0 / 5%), 0px 1px 3px 0px rgb(0 0 0 / 5%)",
+  },
+  appBartitle: {
+    color: "#000000",
+    flexGrow: 1,
+    textAlign: "center",
+    fontWeight: "600",
+  },
   MobileRoot: {
     width: "100%",
     height: "100%",
@@ -280,7 +336,7 @@ const classes = {
   SettingsIcon: {},
   Editpage: {
     minHeight: "100vh",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "backgroundGraycolor.main",
   },
 };
 
