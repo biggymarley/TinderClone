@@ -38,7 +38,7 @@ const SimpleHeader = () => {
   );
 };
 
-const Stepper = () => {
+export const Stepper = () => {
   const formik = useFormik({
     initialValues: {
       Gender: "",
