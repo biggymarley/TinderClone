@@ -2,7 +2,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabPanel from "@mui/lab/TabPanel";
 import { Slide } from "@mui/material";
 import React from "react";
-import ProfileTab from "../CreationStep/profile/ProfileTab";
+import ProfileTab from "../profile/ProfileTab";
 import { HomeTab } from "../HomeTab";
 function HeaderTab({ value }) {
   return (

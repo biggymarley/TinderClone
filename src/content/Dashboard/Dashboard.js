@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import ProfileArea from "./CreationStep/profile/ProfileArea";
+import ProfileArea from "./profile/ProfileArea";
 import HomeArea from "./MainArea/HomeArea";
 import Matches from "./matches/Matches";
 import Messages from "./messages/Messages";

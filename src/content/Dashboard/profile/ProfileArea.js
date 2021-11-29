@@ -1,3 +1,8 @@
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {
   AppBar,
   Avatar,
@@ -9,24 +14,17 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, fontFamily } from "@mui/system";
-import React, { useContext, useState, useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import SettingsIcon from "@mui/icons-material/Settings";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import {
-  Link,
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
-import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
-import CreationStepper from '../CreationStepper';
+import { Box } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
+import CreationStepper from "../CreationStep/CreationStepper";
+import EditMobile from "./Editprofile";
+import MediaMobile from "./MediaMobile";
+import SettingsMobile from "./SettingsMobile";
+import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 const DrawerContext = React.createContext(false);
 export default function ProfileArea() {
   const theme = useTheme();
@@ -75,61 +73,69 @@ const MobileRender = () => {
   );
 };
 
-const FixedAppbar = ({ title }) => {
+export const FixedAppbar = ({ title, noBar }) => {
   const matches = useMediaQuery("@media(min-width: 200px)");
   return (
-    <AppBar position="fixed" sx={classes.appbar} elevation={1}>
+    <AppBar position="fixed" sx={classes.appbar} elevation={noBar ? 0 : 1}>
       <Toolbar variant="dense" sx={{ px: ".5rem !important" }}>
-        <Typography sx={classes.appBartitle}>Edit Info</Typography>
-        <Link to=".." style={{position:"relative"}}>
-        {matches ? (
-          <Button
-          color="secondary"
-          sx={{
-            background: "transparent !important",
-            position: "absolute",
-            right: ".5rem",
-            top:"-18.5px"
-          }}
-          >
-            done
-          </Button>
+        {noBar ? (
+          <Link to=".." style={{ flexGrow: 1, textAlign: "end" }}>
+            <IconButton sx={{background:"transparent !important"}}>
+              <HighlightOffRoundedIcon sx={classes.closeIcon} />
+            </IconButton>
+          </Link>
         ) : (
-          <IconButton sx={{color:"secondary.main"}}>
-          <DoneRoundedIcon />
-          </IconButton>
+          <>
+            <Typography sx={classes.appBartitle}>{title}</Typography>
+            <Link to=".." style={{ position: "relative" }}>
+              {matches ? (
+                <Button
+                  color="secondary"
+                  sx={{
+                    background: "transparent !important",
+                    position: "absolute",
+                    right: ".5rem",
+                    top: "-18.5px",
+                  }}
+                >
+                  done
+                </Button>
+              ) : (
+                <IconButton sx={{ color: "secondary.main" }}>
+                  <DoneRoundedIcon />
+                </IconButton>
+              )}
+            </Link>
+          </>
         )}
-        </Link>
       </Toolbar>
     </AppBar>
   );
 };
 
-const EditMobile = () => {
-  return (
-    <Box sx={classes.Editpage}>
-      <FixedAppbar />
-      <Toolbar />
-      <CreationStepper/>
-    </Box>
-  );
-};
-const MediaMobile = () => {
-  return (
-    <Box sx={classes.Editpage}>
-      {" "}
-      <Link to="..">media</Link>
-    </Box>
-  );
-};
-const SettingsMobile = () => {
-  return (
-    <Box sx={classes.Editpage}>
-      {" "}
-      <Link to="..">settings</Link>
-    </Box>
-  );
-};
+// const EditMobile = () => {
+//   return (
+//     <Box sx={classes.Editpage}>
+//       <FixedAppbar />
+//       <Toolbar />
+//       {/* <CreationStepper/> */}
+//     </Box>
+//   );
+// };
+// const MediaMobile = () => {
+//   return (
+//     <Box sx={classes.Editpage}>
+//       <Link to="..">media</Link>
+//     </Box>
+//   );
+// };
+// const SettingsMobile = () => {
+//   return (
+//     <Box sx={classes.Editpage}>
+//       <Link to="..">settings</Link>
+//     </Box>
+//   );
+// };
 
 const UserButtonsBox = () => {
   return (
@@ -203,8 +209,6 @@ const UserAvatarBox = () => {
 const classes = {
   appbar: {
     backgroundColor: "#FFFFFF",
-    boxShadow:
-      "0px 2px 1px -1px rgb(0 0 0 / 5%), 0px 1px 1px 0px rgb(0 0 0 / 5%), 0px 1px 3px 0px rgb(0 0 0 / 5%)",
   },
   appBartitle: {
     color: "#000000",
@@ -231,6 +235,14 @@ const classes = {
       position: "absolute",
       boxShadow:
         "rgb(50 50 93 / 25%) 0px 17px 10px -17px, rgb(0 0 0 / 30%) 0px 19px 0px -38px",
+    },
+  },
+  closeIcon: {
+    fontSize: "2rem",
+    color: "#d4d8de",
+    transition: "transform .2s ease",
+    "&:hover": {
+      transform: "rotate(90deg)",
     },
   },
   UserAvatarBox: {
