@@ -98,7 +98,7 @@ export const Stepper = () => {
     </Container>
   );
 };
-const UploadImages = () => {
+export const UploadImages = () => {
   const formik = React.useContext(FormikContext);
   const handlUpload = (e) => {
     let reader = new FileReader();
@@ -178,7 +178,7 @@ const ChooseBox = ({ elem }) => {
   );
 };
 
-const Biografy = () => {
+export const Biografy = () => {
   const formik = React.useContext(FormikContext);
   return (
     <Stack direction="column" spacing={3} sx={{ width: "100%" }}>
@@ -196,7 +196,7 @@ const Biografy = () => {
     </Stack>
   );
 };
-const Gender = () => {
+export const Gender = () => {
   const formik = React.useContext(FormikContext);
   return (
     <Stack direction="column" spacing={3} sx={{ flexGrow: 1 }}>
@@ -235,7 +235,7 @@ const Gender = () => {
   );
 };
 
-const SexualPreferences = () => {
+export const SexualPreferences = () => {
   const formik = React.useContext(FormikContext);
   return (
     <Stack direction="column" spacing={3} sx={{ flexGrow: 1 }}>
@@ -280,7 +280,7 @@ const SexualPreferences = () => {
   );
 };
 
-const Hobbies = () => {
+export const Hobbies = () => {
   const [openDialog, setopenDialog] = useState(false);
   const formik = React.useContext(FormikContext);
 

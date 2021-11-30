@@ -151,8 +151,8 @@ const UserButtonsBox = () => {
 
 const ButtonFactory = () => {
   return Buttons.map((button, index) => (
-    <Link to={button.link} style={button.position}>
-      <Stack direction="column" spacing={1.5} key={index}>
+    <Link to={button.link} style={button.position} key={index}>
+      <Stack direction="column" spacing={1.5} >
         <IconButton sx={button.buttonstyle}>{button.Icon}</IconButton>
         <Typography sx={classes.label}>{button.label}</Typography>
       </Stack>
