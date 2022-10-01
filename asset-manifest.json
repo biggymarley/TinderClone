@@ -5,8 +5,8 @@
     "main.css": "/TinderClone/static/css/main.7fb13f63.chunk.css",
     "main.js": "/TinderClone/static/js/main.b19e4db4.chunk.js",
     "main.js.map": "/TinderClone/static/js/main.b19e4db4.chunk.js.map",
-    "runtime-main.js": "/TinderClone/static/js/runtime-main.0d97fa9e.js",
-    "runtime-main.js.map": "/TinderClone/static/js/runtime-main.0d97fa9e.js.map",
+    "runtime-main.js": "/TinderClone/static/js/runtime-main.7c07356d.js",
+    "runtime-main.js.map": "/TinderClone/static/js/runtime-main.7c07356d.js.map",
     "static/js/3.9aec846d.chunk.js": "/TinderClone/static/js/3.9aec846d.chunk.js",
     "static/js/3.9aec846d.chunk.js.map": "/TinderClone/static/js/3.9aec846d.chunk.js.map",
     "static/js/4.a7f0fe48.chunk.js": "/TinderClone/static/js/4.a7f0fe48.chunk.js",
@@ -15,8 +15,8 @@
     "static/js/5.a94373ca.chunk.js.map": "/TinderClone/static/js/5.a94373ca.chunk.js.map",
     "static/js/6.5cd0128b.chunk.js": "/TinderClone/static/js/6.5cd0128b.chunk.js",
     "static/js/6.5cd0128b.chunk.js.map": "/TinderClone/static/js/6.5cd0128b.chunk.js.map",
-    "static/js/7.0a9d9cf3.chunk.js": "/TinderClone/static/js/7.0a9d9cf3.chunk.js",
-    "static/js/7.0a9d9cf3.chunk.js.map": "/TinderClone/static/js/7.0a9d9cf3.chunk.js.map",
+    "static/js/7.afb39d86.chunk.js": "/TinderClone/static/js/7.afb39d86.chunk.js",
+    "static/js/7.afb39d86.chunk.js.map": "/TinderClone/static/js/7.afb39d86.chunk.js.map",
     "static/js/8.e2fd872a.chunk.js": "/TinderClone/static/js/8.e2fd872a.chunk.js",
     "static/js/8.e2fd872a.chunk.js.map": "/TinderClone/static/js/8.e2fd872a.chunk.js.map",
     "index.html": "/TinderClone/index.html",
@@ -29,7 +29,7 @@
     "static/media/homebg.5e9cc30c.webp": "/TinderClone/static/media/homebg.5e9cc30c.webp"
   },
   "entrypoints": [
-    "static/js/runtime-main.0d97fa9e.js",
+    "static/js/runtime-main.7c07356d.js",
     "static/js/3.9aec846d.chunk.js",
     "static/css/main.7fb13f63.chunk.css",
     "static/js/main.b19e4db4.chunk.js"
